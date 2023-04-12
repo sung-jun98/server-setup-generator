@@ -1,32 +1,28 @@
-const $drop = document.querySelector(".dropBox");
-const $title = document.querySelector(".dropBox h1");
+import "./styles.css";
 
-// 드래그한 파일 객체가 해당 영역에 놓였을 때
-$drop.ondrop = (e) => {
-  e.preventDefault();
-  $drop.className = "dropBox";
-   
-  // 파일 리스트
-  const files = [...e.dataTransfer?.files];
-
-  $title.innerHTML = files.map(v => v.name).join("<br>");
+var spacing_x = 40;
+var spacing_y = 100;
+// Initialize Flowy
+flowy(
+  document.getElementById("canvas"),
+  onGrab,
+  onRelease,
+  onSnap,
+  onRearrange,
+  spacing_x,
+  spacing_y
+);
+function onGrab(block) {
+  // When the user grabs a block
+}
+function onRelease() {
+  // When the user releases a block
+}
+function onSnap(block, first, parent) {
+  // When a block snaps with another one
+  return true;
+}
+function onRearrange(block, parent) {
+  // When a block is rearranged
 }
 
-// ondragover 이벤트가 없으면 onDrop 이벤트가 실핻되지 않습니다.
-$drop.ondragover = (e) => {
-  e.preventDefault();
-}
-
-// 드래그한 파일이 최초로 진입했을 때
-$drop.ondragenter = (e) => {
-  e.preventDefault();
- 
-  $drop.classList.add("active");
-}
-
-// 드래그한 파일이 영역을 벗어났을 때
-$drop.ondragleave = (e) => {
-  e.preventDefault();
-  
-  $drop.classList.remove("active");
-}
