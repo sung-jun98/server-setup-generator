@@ -19,7 +19,7 @@
 
 	<style>
 		.flowchart-example-container {
-			width: 800px;
+			width: 1400px;
 			height: 400px;
 			background: white;
 			border: 1px solid #BBB;
@@ -29,7 +29,7 @@
 </head>
 
 <body>
-	<h1>Semi-minimalist usage sample</h1>
+	<h1>2018305012 김성준</h1>
 	<h4>Sample created with basis on some from Sebastien Drouyer, original author's <a href="https://sebastien.drouyer.com/jquery.flowchart-demo/">website</a>.</h4>
 	<h4>Flowchart</h4>
 	<div id="chart_container">
@@ -46,6 +46,7 @@
 			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">1 in &amp; 2 out</div>
 			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
 			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
+			<div class="draggable_operator" data-nb-inputs="4" data-nb-outputs="2">로그인 기능</div>
 		</div>
 	</div>
 	<button class="create_operator">Create operator</button>
@@ -259,7 +260,8 @@
 			function Flow2Text() {
 				var data = $flowchart.flowchart('getData');
 				$('#flowchart_data').val(JSON.stringify(data, null, 2));
-			}
+			} 																	//GetData 버튼을 누르면 호출되는 함수
+																				//여기 밑에 AJAX으로 JSON 구조를 반환하는 로직을 짜면 될 듯
 			$('#get_data').click(Flow2Text);
 
 			function Text2Flow() {
@@ -301,7 +303,7 @@
 
 		});
 
-		var defaultFlowchartData = {
+		var defaultFlowchartData = { //처음 화면을 로드했을 떄 보여질 디폴트 구조 정의
 			operators: {
 				operator1: {
 					top: 20,

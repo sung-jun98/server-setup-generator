@@ -267,8 +267,9 @@ jQuery(function ($) {
             this.callbackEvent('afterChange', ['link_create']);
         },
 
-        _autoCreateSubConnector: function (operator, connector, connectorType, subConnector) {
+        _autoCreateSubConnector: function (operator, connector, connectorType, subConnector) { //link가 연결 될 떄마다 자동으로 호출된다
             var connectorInfos = this.data.operators[operator].internal.properties[connectorType][connector];
+            //console.dir(connectorInfos);//나중에 삭제할것 //출력결과: label: "Output 1"
             if (connectorInfos.multiple) {
                 var fromFullElement = this.data.operators[operator].internal.els;
                 var nbFromConnectors = this.data.operators[operator].internal.els.connectors[connector].length;
@@ -511,10 +512,12 @@ jQuery(function ($) {
             }
             return infos;
         },
-
+//////////////////////////
         _getOperatorFullElement: function (operatorData) {
             var infos = this.getOperatorCompleteData(operatorData);
-
+			//console.dir(operatorData);//나중에 삭제할것
+			//console.dir(infos);//나중에 삭제할것
+			//console.log("");
             var $operator = $('<div class="flowchart-operator"></div>');
             $operator.addClass(infos.class);
 
@@ -570,42 +573,67 @@ jQuery(function ($) {
                 connectors[connectorKey] = [];
                 connectorSets[connectorKey] = $operator_connector_set;
 
-                if ($.isArray(connectorInfos.label)) {
+  				//console.log("connectorInfos: " + JSON.stringify( connectorInfos, null, 2));//나중에 삭제할것
+  				
+                if ($.isArray(connectorInfos.label)) { //만약 input, output이 여러개라면
                     for (var i = 0; i < connectorInfos.label.length; i++) {
                         self._createSubConnector(connectorKey, connectorInfos.label[i], fullElement);
+                        //console.log("_createSubConnector 실행");
                     }
                 } else {
                     self._createSubConnector(connectorKey, connectorInfos, fullElement);
+                    //console.log("_createSubConnector 실행2");
                 }
+                //console.log("");
             }
 
             for (var key_i in infos.inputs) {
                 if (infos.inputs.hasOwnProperty(key_i)) {
                     addConnector(key_i, infos.inputs[key_i], $operator_inputs, 'inputs');
+                    //console.log("addConnector()1 실행");
                 }
             }
 
             for (var key_o in infos.outputs) {
                 if (infos.outputs.hasOwnProperty(key_o)) {
                     addConnector(key_o, infos.outputs[key_o], $operator_outputs, 'outputs');
+                    //console.log("addConnector()2 실행");
                 }
             }
-
+            console.log("fullElement");//나중에 삭제할것
+			console.dir(fullElement);//나중에 삭제할것
             return fullElement;
         },
-
-        _createSubConnector: function (connectorKey, connectorInfos, fullElement) {
+//////////////////////////
+        _createSubConnector: function (connectorKey, connectorInfos, fullElement) { //Input/Output 라벨과 관련된 코드
+        	//console.log("connectorKey : "+ connectorKey);//
+        	//console.log("connectorInfos: " + JSON.stringify( connectorInfos, null, 2));//
+        	//console.log("fullElement: " + JSON.stringify( fullElement, null, 2));
+        	//console.log(" "); //매개변수 확인 용도 코드
+        	
             var $operator_connector_set = fullElement.connectorSets[connectorKey];
 
             var subConnector = fullElement.connectors[connectorKey].length;
 
             var $operator_connector = $('<div class="flowchart-operator-connector"></div>');
             $operator_connector.appendTo($operator_connector_set);
-            $operator_connector.data('connector', connectorKey);
+            
+            //console.log($operator_connector_set);//
+            //console.log( JSON.stringify( $operator_connector_set, null, 2));
+            
+            $operator_connector.data('connector', connectorKey); //아마 이 connectorKey를 설정함에 따라서 전달할 GetData값이 바뀔듯
             $operator_connector.data('sub_connector', subConnector);
 
             var $operator_connector_label = $('<div class="flowchart-operator-connector-label"></div>');
+            
+            //console.log("$operator_connector_label" + $operator_connector_label.html());////나중에 지울것
             $operator_connector_label.text(connectorInfos.label.replace('(:i)', subConnector + 1));
+            //$operator_connector_label.text(connectorInfos.label.replace('(:i)', '테스트'));//나중에 지울것
+            
+            
+           
+            
+            
             $operator_connector_label.appendTo($operator_connector);
 
             var $operator_connector_arrow = $('<div class="flowchart-operator-connector-arrow"></div>');
@@ -618,7 +646,7 @@ jQuery(function ($) {
             fullElement.connectors[connectorKey].push($operator_connector);
             fullElement.connectorArrows[connectorKey].push($operator_connector_arrow);
             fullElement.connectorSmallArrows[connectorKey].push($operator_connector_small_arrow);
-        },
+        },//_createSubConnector 끝
 
         getOperatorElement: function (operatorData) {
             var fullElement = this._getOperatorFullElement(operatorData);
@@ -634,7 +662,18 @@ jQuery(function ($) {
             return this.operatorNum;
         },
 
-        createOperator: function (operatorId, operatorData) {
+        createOperator: function (operatorId, operatorData) { //새로 연산자를 생성할 함수(위치값 등)
+        	console.log('operatorId' + operatorId);//확인용
+        	console.dir(operatorData);//확인용
+        	
+        	//여기서부터 테스트코드
+        	console.log('title :' +operatorData.properties.title);
+        	if (operatorData.properties.title == "로그인 기능"){
+				console.log('input1 :' +operatorData.properties.inputs.input_0.label);
+				operatorData.properties.inputs.input_0.label = '테스트용도';
+			}
+        	
+        	//// 여기까지 테스트코드
             operatorData.internal = {};
             this._refreshInternalProperties(operatorData);
 
@@ -728,7 +767,7 @@ jQuery(function ($) {
             }
 
             this.callbackEvent('afterChange', ['operator_create']);
-        },
+        }, //여기까지가 createOperator
 
         _connectorClicked: function (operator, connector, subConnector, connectorCategory) {
             if (connectorCategory == 'outputs') {
