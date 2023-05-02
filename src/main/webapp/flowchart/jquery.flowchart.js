@@ -663,7 +663,7 @@ jQuery(function ($) {
         },
 
         createOperator: function (operatorId, operatorData) { //새로 연산자를 생성할 함수(위치값 등)
-        	console.log('operatorId' + operatorId);//확인용
+        	console.log('operatorId  : ' + operatorId);//확인용
         	console.dir(operatorData);//확인용
         	
         	//여기서부터 테스트코드
@@ -1090,6 +1090,9 @@ jQuery(function ($) {
                 }
             }
             data.operatorTypes = this.data.operatorTypes;
+            //여기서부터 테스트코드
+            console.dir(data);
+            //여기까지 테스트코드
             return data;
         },
 

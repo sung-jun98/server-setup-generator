@@ -30,7 +30,9 @@
 
 <body>
 	<h1>2018305012 김성준</h1>
+	<!-- 
 	<h4>Sample created with basis on some from Sebastien Drouyer, original author's <a href="https://sebastien.drouyer.com/jquery.flowchart-demo/">website</a>.</h4>
+	 -->
 	<h4>Flowchart</h4>
 	<div id="chart_container">
 		<div class="flowchart-example-container" id="flowchartworkspace"></div>
@@ -65,6 +67,30 @@
 		<textarea id="flowchart_data"></textarea>
 	</div>
 	<script type="text/javascript">
+		
+//여기서부터 테스트코드
+
+		// 더블 클릭 이벤트 리스너 등록
+		document.addEventListener('dblclick', function(event) {
+		  // 이벤트가 draggable_operator 클래스를 포함하고 있는지 확인
+		  if (event.target.classList.contains('flowchart-operator-connector-label')) {
+		    // input 태그 생성
+		    var input = document.createElement('input');
+		    input.type = 'text';
+		    input.value = event.target.textContent;
+		    input.addEventListener('blur', function() {
+		      // input 태그에서 포커스가 벗어났을 때 새로운 텍스트로 대체
+		      event.target.textContent = input.value;
+		    });
+		    // 기존 텍스트 대신 input 태그 삽입
+		    event.target.textContent = '';
+		    event.target.appendChild(input);
+		    input.focus();
+		    
+		    
+		  }
+		});
+//여기까지 테스트코드
 		/* global $ */
 		$(document).ready(function() {
 			var $flowchart = $('#flowchartworkspace');
@@ -260,6 +286,25 @@
 			function Flow2Text() {
 				var data = $flowchart.flowchart('getData');
 				$('#flowchart_data').val(JSON.stringify(data, null, 2));
+				console.log(data.operators);//
+				
+				//여기서부터 테스트코드
+				 $.ajax({
+				    url: '/server_setup_generator/staticWebReturn',
+				    type: 'POST',
+				    data: { flowchartData: data },
+				    success: function(response) {
+				      console.log('Data sent successfully!');
+				    },
+				    error: function(jqXHR, textStatus, errorThrown) {
+				    	console.log("실패");
+				      console.error('Error sending data: ' + textStatus, errorThrown);
+				    }
+				  });
+				//테스트 코드 끝
+				
+				
+				
 			} 																	//GetData 버튼을 누르면 호출되는 함수
 																				//여기 밑에 AJAX으로 JSON 구조를 반환하는 로직을 짜면 될 듯
 			$('#get_data').click(Flow2Text);
