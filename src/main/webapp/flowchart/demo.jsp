@@ -17,6 +17,10 @@
 	<link rel="stylesheet" href="jquery.flowchart.css">
 	<script src="jquery.flowchart.js"></script>
 
+	<!-- NonModal CSS -->
+	<link rel="stylesheet" href="nonModal.css">
+	<!-- <script src="nonModal.js"></script> -->
+	
 	<style>
 		.flowchart-example-container {
 			width: 1400px;
@@ -66,9 +70,24 @@
 	<div>
 		<textarea id="flowchart_data"></textarea>
 	</div>
+	<!-- 모달창 테스트코드 -->
+	<button id="open-popup">팝업 열기</button>
+		<div id="popup-container">
+		  	<div id="popup">
+		    <h2>로그인 기능 관련 다이어그램</h2>
+		    <p>사용할 다이어그램을 끌어다 캔버스 안에 배치하세요</p>
+		    <div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">변수이름</div>
+		    
+		    <button id="close-popup">팝업 닫기</button>
+		    
+	  	</div>
+	</div>
+	
+	<script src="nonModal.js"></script>
+	<!--  여기까지 모달창 테스트코드 -->
 	<script type="text/javascript">
 		
-//여기서부터 테스트코드
+//여기서부터 테스트코드(Input/Output 태그를 더블클릭했을 때 변경할 수 있도록 하는 코드)
 
 		// 더블 클릭 이벤트 리스너 등록
 		document.addEventListener('dblclick', function(event) {
@@ -286,15 +305,18 @@
 			function Flow2Text() {
 				var data = $flowchart.flowchart('getData');
 				$('#flowchart_data').val(JSON.stringify(data, null, 2));
-				console.log(data.operators);//
+				//console.log(data.operators);//
 				
 				//여기서부터 테스트코드
 				 $.ajax({
 				    url: '/server_setup_generator/staticWebReturn',
 				    type: 'POST',
-				    data: { flowchartData: data },
+				    data: JSON.stringify({ flowchartData: data }),//
+				    contentType: 'application/json',//
+				    dataType: 'json',//
 				    success: function(response) {
-				      console.log('Data sent successfully!');
+				      console.log('response : ' + response.result);
+				      //console.log(JSON.stringify(data, null, 2));
 				    },
 				    error: function(jqXHR, textStatus, errorThrown) {
 				    	console.log("실패");

@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+#popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.03);
+  z-index: 9999;
+}
+
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  z-index: 10000;
+}

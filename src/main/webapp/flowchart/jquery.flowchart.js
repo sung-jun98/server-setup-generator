@@ -663,10 +663,10 @@ jQuery(function ($) {
         },
 
         createOperator: function (operatorId, operatorData) { //새로 연산자를 생성할 함수(위치값 등)
-        	console.log('operatorId  : ' + operatorId);//확인용
+        	console.log('operatorId' + operatorId);//확인용
         	console.dir(operatorData);//확인용
         	
-        	//여기서부터 테스트코드
+        	//여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
         	console.log('title :' +operatorData.properties.title);
         	if (operatorData.properties.title == "로그인 기능"){
 				console.log('input1 :' +operatorData.properties.inputs.input_0.label);
