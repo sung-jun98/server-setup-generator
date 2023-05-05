@@ -46,17 +46,14 @@ public class staticWebReturn extends HttpServlet {
 	            e.printStackTrace();
 	            return;
 	        }
+	        System.out.print("jsonObject : ");
+	        System.out.println(jsonObject);
 
 	        // JSON 객체에서 필요한 값 추출
 	        Object resultData_operators = null;
 	        Object resultData_links = null;
 	        try {
-	        	Iterator<String> keys = jsonObject.keys();
-	        	//Iterator에 있는 값 꺼내기
-	    		 while(keys.hasNext()) {
-	    		 	 System.out.println(keys.next()); 
-	    		 }
-	        	System.out.println("keys : " + keys);
+	        	
 	        	resultData_operators = jsonObject.get("operators");
 	        	resultData_links = jsonObject.get("links");
 	        } catch (JSONException e) {
@@ -64,6 +61,7 @@ public class staticWebReturn extends HttpServlet {
 	            e.printStackTrace();
 	            return;
 	        }
+	        
 	        System.out.println("resultData_operators : "+ resultData_operators);
 	        System.out.println("resultData_links :" + resultData_links);
 

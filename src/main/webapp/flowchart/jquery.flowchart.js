@@ -600,8 +600,8 @@ jQuery(function ($) {
                     //console.log("addConnector()2 실행");
                 }
             }
-            console.log("fullElement");//나중에 삭제할것
-			console.dir(fullElement);//나중에 삭제할것
+            //console.log("fullElement");//나중에 삭제할것
+			//console.dir(fullElement);//나중에 삭제할것
             return fullElement;
         },
 //////////////////////////
@@ -663,13 +663,13 @@ jQuery(function ($) {
         },
 
         createOperator: function (operatorId, operatorData) { //새로 연산자를 생성할 함수(위치값 등)
-        	console.log('operatorId' + operatorId);//확인용
-        	console.dir(operatorData);//확인용
+        	//console.log('operatorId' + operatorId);//확인용
+        	//console.dir(operatorData);//확인용
         	
         	//여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
-        	console.log('title :' +operatorData.properties.title);
+        	//console.log('title :' +operatorData.properties.title);
         	if (operatorData.properties.title == "로그인 기능"){
-				console.log('input1 :' +operatorData.properties.inputs.input_0.label);
+				//console.log('input1 :' +operatorData.properties.inputs.input_0.label);
 				operatorData.properties.inputs.input_0.label = '테스트용도';
 			}
         	
@@ -1091,7 +1091,7 @@ jQuery(function ($) {
             }
             data.operatorTypes = this.data.operatorTypes;
             //여기서부터 테스트코드
-            console.dir(data);
+            //console.dir(data);
             //여기까지 테스트코드
             return data;
         },

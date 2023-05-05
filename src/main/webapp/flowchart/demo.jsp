@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-	<title>Home</title>
+	<title>2018305012 김성준</title>
 	<meta charset="utf-8">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,6 +55,33 @@
 			<div class="draggable_operator" data-nb-inputs="4" data-nb-outputs="2">로그인 기능</div>
 		</div>
 	</div>
+<!-- -----------------------시작 -->	
+<!-- DB 관련 정보 기입 테스트 -->
+	<h4>DB 생성기</h4>
+	<form id=Building_DB_form>
+	<hr>
+		<table>
+	      <thead>
+	        <tr>
+	        	<th>Table Name</th>  
+	            <th>Column Name</th>
+	            <th>Data Type</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr>
+	        	<td rowspan="1"><input type="text" id="tableName" name="tableName"></td>
+	            <td><input type="text" id="columnName" name="columnName"></td>
+	            <td><input type="text" id="dataType" name="dataType"><br></td>
+	            <td><label> <input type="checkbox" id="primaryKey" name="primaryKey">PK</label></td>
+	            <td><label> <input type="checkbox" id="notNull" name="notNull">NN</label></td>
+	        </tr>
+	      </tbody>
+    </table>
+		<input type="submit" value="생성">
+	<hr>
+	</form>
+<!-- .......................끝 -->
 	<button class="create_operator">Create operator</button>
 	<button class="delete_selected_button">Delete selected operator / link</button>
 	<div id="operator_properties" style="display: block;">
@@ -85,8 +112,11 @@
 	
 	<script src="nonModal.js"></script>
 	<!--  여기까지 모달창 테스트코드 -->
+	<!-- DB관련 정보 전송용 스크립트 -->
+	<script src="buildingDB.js"></script>
 	<script type="text/javascript">
-		
+//------------------------------------
+//-------시작
 //여기서부터 테스트코드(Input/Output 태그를 더블클릭했을 때 변경할 수 있도록 하는 코드)
 
 		// 더블 클릭 이벤트 리스너 등록
@@ -109,7 +139,8 @@
 		    
 		  }
 		});
-//여기까지 테스트코드
+//----------끝
+//-------------------------------------------
 		/* global $ */
 		$(document).ready(function() {
 			var $flowchart = $('#flowchartworkspace');
@@ -307,7 +338,7 @@
 				$('#flowchart_data').val(JSON.stringify(data, null, 2));
 				//console.log(data.operators);//
 				
-				//여기서부터 테스트코드
+//여기서부터 테스트코드(AJAX로 /staticWebReturn.java로 전송한다.)
 				 $.ajax({
 				    url: '/server_setup_generator/staticWebReturn',
 				    type: 'POST',
@@ -323,7 +354,7 @@
 				      console.error('Error sending data: ' + textStatus, errorThrown);
 				    }
 				  });
-				//테스트 코드 끝
+//테스트 코드 끝
 				
 				
 				
