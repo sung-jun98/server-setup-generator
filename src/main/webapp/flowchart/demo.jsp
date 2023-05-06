@@ -19,7 +19,9 @@
 
 	<!-- NonModal CSS -->
 	<link rel="stylesheet" href="nonModal.css">
-	<!-- <script src="nonModal.js"></script> -->
+	
+	<!-- bootstrap CSS -->
+	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	
 	<style>
 		.flowchart-example-container {
@@ -41,26 +43,32 @@
 	<div id="chart_container">
 		<div class="flowchart-example-container" id="flowchartworkspace"></div>
 	</div>
+	<button class="delete_selected_button">Delete selected operator / link</button>
 	<div class="draggable_operators">
 		<div class="draggable_operators_label">
 			Operators (drag and drop them in the flowchart):
 		</div>
 		<div class="draggable_operators_divs">
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="0">1 input</div>
-			<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">1 output</div>
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="1">1 input &amp; 1 output</div>
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">1 in &amp; 2 out</div>
-			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
-			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
-			<div class="draggable_operator" data-nb-inputs="4" data-nb-outputs="2">로그인 기능</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="0">1 input</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="0" data-nb-outputs="1" hidden>1 output</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">1 input &amp; 1 output</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2">1 in &amp; 2 out</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="2">로그인 기능</div>
+			
 		</div>
 	</div>
+	
 <!-- -----------------------시작 -->	
 <!-- DB 관련 정보 기입 테스트 -->
+	<br><br>
 	<h4>DB 생성기</h4>
+	<input type="button" onClick="addRow()" value="행 추가" class="btn btn-primary"></input>
+	
 	<form id=Building_DB_form>
 	<hr>
-		<table>
+		<table id="tableForDB" class="table table-striped table-sm">
 	      <thead>
 	        <tr>
 	        	<th>Table Name</th>  
@@ -70,20 +78,21 @@
 	      </thead>
 	      <tbody>
 	        <tr>
-	        	<td rowspan="1"><input type="text" id="tableName" name="tableName"></td>
-	            <td><input type="text" id="columnName" name="columnName"></td>
-	            <td><input type="text" id="dataType" name="dataType"><br></td>
-	            <td><label> <input type="checkbox" id="primaryKey" name="primaryKey">PK</label></td>
-	            <td><label> <input type="checkbox" id="notNull" name="notNull">NN</label></td>
+	        	<td rowspan="1" id="rowspan_Of_TableName"><input type="text" id="tableName" name="tableName"  class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+	            <td><input type="text" id="columnName1" name="columnName1" class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+	            <td><input type="text" id="dataType1" name="dataType1" class="form-control"  style="border:1px solid white; background-color:transparent;"><br></td>
+	            <td><label> <input type="checkbox" id="primaryKey1" name="primaryKey1">PK</label></td>
+	            <td><label> <input type="checkbox" id="notNull1" name="notNull1">NN</label></td>
 	        </tr>
 	      </tbody>
+	      <input type="submit" value="DB 테이블 생성" class="btn btn-primary">
     </table>
-		<input type="submit" value="생성">
+		
 	<hr>
 	</form>
 <!-- .......................끝 -->
 	<button class="create_operator">Create operator</button>
-	<button class="delete_selected_button">Delete selected operator / link</button>
+	
 	<div id="operator_properties" style="display: block;">
 		<label for="operator_title">Operator's title: </label><input id="operator_title" type="text">
 	</div>
@@ -114,6 +123,9 @@
 	<!--  여기까지 모달창 테스트코드 -->
 	<!-- DB관련 정보 전송용 스크립트 -->
 	<script src="buildingDB.js"></script>
+	<!-- Bootstrap js script -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+	
 	<script type="text/javascript">
 //------------------------------------
 //-------시작
@@ -397,8 +409,7 @@
 			//--- end
 			//--- save and load
 			//-----------------------------------------
-
-
+			
 		});
 
 		var defaultFlowchartData = { //처음 화면을 로드했을 떄 보여질 디폴트 구조 정의
@@ -443,6 +454,7 @@
 			}
 		};
 		if (false) console.log('remove lint unused warning', defaultFlowchartData);
+		
 	</script>
 </body>
 

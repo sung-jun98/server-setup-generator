@@ -10,7 +10,7 @@ const nonModal_load = function(mutationList){
 	for (const mutation of mutationList){
 			//요소가 실제로 추가되었을 떄 실행될 로직 기술
 			if(mutation.addedNodes[0] && mutation.addedNodes[0].classList.contains('flowchart-operator') && 
-				+ /^로그인 기능.*/.test(mutation.addedNodes[0].textContent) ){//오퍼레이터 이름이 '로그인 기능'일때만 동작
+				+ /^로그인 기능.*/.test(mutation.addedNodes[0].textContent)){//오퍼레이터 이름이 '로그인 기능'일때만 동작
 				
 					popupContainer.style.display = "block";
 				}
@@ -20,9 +20,6 @@ const nonModal_load = function(mutationList){
 
 		}
 	}
-
-
-
 //캔버스 내 새로운 요소를 감지하기 위한 MutationObserver 추가
 const observer = new MutationObserver(nonModal_load);
 
@@ -31,7 +28,7 @@ observer.observe(canvas, {childList : true, subtree : true});
 
 //========= 끝 =========새로운 요소가 캔버스에 추가될 때마다 실행될 콜백 함수 정의 끝
 //======================
-openPopupBtn.addEventListener("click", function() {
+openPopupBtn.addEventListener("click", function() { //팝업 실행 버튼을 눌렀을 시의 로직
   popupContainer.style.display = "block";
 });
 

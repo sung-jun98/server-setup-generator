@@ -24,7 +24,7 @@ public class dbBuilder extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //request 내용확인 용도
-// JSON 데이터 추출
+       // JSON 데이터 추출
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
 	        StringBuilder sb = new StringBuilder();
 	        String line = null;
@@ -34,7 +34,7 @@ public class dbBuilder extends HttpServlet {
 	        String jsonString = sb.toString();
 	        System.out.print("jsonString : ");
 	        System.out.println(jsonString);//
-	        // JSON 객체 생성
+	   // JSON 객체 생성
 	        JSONObject jsonObject;
 	        try {
 	            jsonObject = new JSONObject(jsonString);
@@ -46,7 +46,7 @@ public class dbBuilder extends HttpServlet {
 	        System.out.print("jsonObject : ");
 	        System.out.println(jsonObject);
 
-//response관련 설정
+//response관련 설정 {result:success}라고 보낸다
 			response.setContentType("application/json");
 		    PrintWriter out = response.getWriter();
 		    JSONObject json = new JSONObject();
