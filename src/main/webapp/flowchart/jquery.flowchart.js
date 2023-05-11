@@ -627,7 +627,17 @@ jQuery(function ($) {
             var $operator_connector_label = $('<div class="flowchart-operator-connector-label"></div>');
             
             //console.log("$operator_connector_label" + $operator_connector_label.html());////나중에 지울것
+ /////////////////////
+            //if (typeof connectorInfos.label === 'string') {
+			//	  $operator_connector_label.text(connectorInfos.label.replace('(:i)', subConnector + 1));
+			//	} else {
+			//	  $operator_connector_label = $('<div class="flowchart-operator-connector-label"></div>');
+			//	}
+ /////////////////////
+ 			//원래 코드. 절대 지우지 말것
+ 			console.log("connectorInfos.label :" + connectorInfos.label); //실행결과 : Output 1
             $operator_connector_label.text(connectorInfos.label.replace('(:i)', subConnector + 1));
+            
             //$operator_connector_label.text(connectorInfos.label.replace('(:i)', '테스트'));//나중에 지울것
             
             
@@ -665,15 +675,27 @@ jQuery(function ($) {
         createOperator: function (operatorId, operatorData) { //새로 연산자를 생성할 함수(위치값 등)
         	//console.log('operatorId' + operatorId);//확인용
         	//console.dir(operatorData);//확인용
-        	
+//==============================
         	//여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
         	//console.log('title :' +operatorData.properties.title);
         	if (operatorData.properties.title == "로그인 기능"){
 				//console.log('input1 :' +operatorData.properties.inputs.input_0.label);
-				operatorData.properties.inputs.input_0.label = '테스트용도';
+				operatorData.properties.inputs.input_0.label = '입력ID';
+				operatorData.properties.inputs.input_1.label = '입력PW';
+				operatorData.properties.inputs.input_2.label = '정답ID';
+				operatorData.properties.inputs.input_3.label = '정답PW';
+					/*'
+				operatorData.properties.inputs.input_0.label = $('<input>').attr('type', 'text').attr('id', 'inputID').attr('placeholder', 'ID');
+				operatorData.properties.inputs.input_1.label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'Password');
+				operatorData.properties.inputs.input_2.label = $('<input>').attr('type', 'text').attr('id', 'correctID').attr('value', 'correct_id');
+				operatorData.properties.inputs.input_3.label = $('<input>').attr('type', 'hidden').attr('id', 'correctPW').attr('value', 'correct_password');
+					*/		
+				operatorData.properties.outputs.output_0.label = '일치';
+				operatorData.properties.outputs.output_1.label = '불일치';
 			}
         	
         	//// 여기까지 테스트코드
+//=============================
             operatorData.internal = {};
             this._refreshInternalProperties(operatorData);
 

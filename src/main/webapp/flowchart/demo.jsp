@@ -48,15 +48,21 @@
 		<div class="draggable_operators_label">
 			Operators (drag and drop them in the flowchart):
 		</div>
-		<div class="draggable_operators_divs">
+		<div class="draggable_operators_divs"><!--  
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="0">1 input</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="0" data-nb-outputs="1" hidden>1 output</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">1 input &amp; 1 output</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2">1 in &amp; 2 out</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
+			-->
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="2">로그인 기능</div>
-			
+			<!-- 이 밑은 나중에 삭제 혹은 수정할 것 -->
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">회원 가입</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">회원 정보 수정</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">댓글 작성</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">게시글 작성</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">파일 업로드</div>
 		</div>
 	</div>
 	
@@ -91,7 +97,7 @@
 	<hr>
 	</form>
 <!-- .......................끝 -->
-	<button class="create_operator">Create operator</button>
+	<!--  <button class="create_operator">Create operator</button>-->
 	
 	<div id="operator_properties" style="display: block;">
 		<label for="operator_title">Operator's title: </label><input id="operator_title" type="text">
@@ -100,9 +106,9 @@
 		<label for="link_color">Link's color: </label><input id="link_color" type="color">
 	</div>
 	<button class="get_data" id="get_data">Get data</button>
-	<button class="set_data" id="set_data">Set data</button>
+	<!--  <button class="set_data" id="set_data">Set data</button>-->
 	<button id="save_local">Save to local storage</button>
-	<button id="load_local">Load from local storage</button>
+	<!--  <button id="load_local">Load from local storage</button>-->
 	<div>
 		<textarea id="flowchart_data"></textarea>
 	</div>
@@ -112,7 +118,11 @@
 		  	<div id="popup">
 		    <h2>로그인 기능 관련 다이어그램</h2>
 		    <p>사용할 다이어그램을 끌어다 캔버스 안에 배치하세요</p>
-		    <div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">변수이름</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">아이디가 없을 경우</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">비밀번호가 틀릴 경우</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">DB오류가 발생했을 경우</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="0">리턴 페이지</div>
+		    
 		    
 		    <button id="close-popup">팝업 닫기</button>
 		    
@@ -128,31 +138,7 @@
 	
 	<script type="text/javascript">
 //------------------------------------
-//-------시작
-//여기서부터 테스트코드(Input/Output 태그를 더블클릭했을 때 변경할 수 있도록 하는 코드)
 
-		// 더블 클릭 이벤트 리스너 등록
-		document.addEventListener('dblclick', function(event) {
-		  // 이벤트가 draggable_operator 클래스를 포함하고 있는지 확인
-		  if (event.target.classList.contains('flowchart-operator-connector-label')) {
-		    // input 태그 생성
-		    var input = document.createElement('input');
-		    input.type = 'text';
-		    input.value = event.target.textContent;
-		    input.addEventListener('blur', function() {
-		      // input 태그에서 포커스가 벗어났을 때 새로운 텍스트로 대체
-		      event.target.textContent = input.value;
-		    });
-		    // 기존 텍스트 대신 input 태그 삽입
-		    event.target.textContent = '';
-		    event.target.appendChild(input);
-		    input.focus();
-		    
-		    
-		  }
-		});
-//----------끝
-//-------------------------------------------
 		/* global $ */
 		$(document).ready(function() {
 			var $flowchart = $('#flowchartworkspace');
@@ -411,6 +397,33 @@
 			//-----------------------------------------
 			
 		});
+//-------시작
+//여기서부터 테스트코드(Input/Output 태그를 더블클릭했을 때 변경할 수 있도록 하는 코드)
+
+		// 더블 클릭 이벤트 리스너 등록
+		document.addEventListener('dblclick', function(event) {
+		  // 이벤트가 draggable_operator 클래스를 포함하고 있는지 확인
+		  if (event.target.classList.contains('flowchart-operator-connector-label')) {
+		    // input 태그 생성
+		    var input = document.createElement('input');
+		    input.type = 'text';
+		    input.value = event.target.textContent;
+		    input.addEventListener('blur', function() {
+		      // input 태그에서 포커스가 벗어났을 때 새로운 텍스트로 대체
+		      event.target.textContent = input.value;
+		    });
+		    // 기존 텍스트 대신 input 태그 삽입
+		    event.target.textContent = '';
+		    event.target.appendChild(input);
+		    input.focus();
+		    
+		    
+		    
+		    
+		  }
+		});
+//----------끝
+//-------------------------------------------
 
 		var defaultFlowchartData = { //처음 화면을 로드했을 떄 보여질 디폴트 구조 정의
 			operators: {
