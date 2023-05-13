@@ -627,19 +627,21 @@ jQuery(function ($) {
             var $operator_connector_label = $('<div class="flowchart-operator-connector-label"></div>');
             
             //console.log("$operator_connector_label" + $operator_connector_label.html());////나중에 지울것
- /////////////////////
-            //if (typeof connectorInfos.label === 'string') {
-			//	  $operator_connector_label.text(connectorInfos.label.replace('(:i)', subConnector + 1));
-			//	} else {
-			//	  $operator_connector_label = $('<div class="flowchart-operator-connector-label"></div>');
-			//	}
- /////////////////////
+
  			//원래 코드. 절대 지우지 말것
- 			console.log("connectorInfos.label :" + connectorInfos.label); //실행결과 : Output 1
+ 			//console.log("connectorInfos.label :" + connectorInfos.label); //실행결과 : Output 1
             $operator_connector_label.text(connectorInfos.label.replace('(:i)', subConnector + 1));
             
             //$operator_connector_label.text(connectorInfos.label.replace('(:i)', '테스트'));//나중에 지울것
-            
+  /////////////////////
+  //input/output 태그에 텍스트 대신 input 태그로 사용자 입력을 받을 수 있도록 한다.
+            if(connectorInfos.label === "입력ID"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputID').attr('placeholder', 'ID').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === "입력PW"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'Password').css("width", "100px").addClass('elasticValueLabel');
+			}
+ /////////////////////
             
            
             
@@ -679,6 +681,7 @@ jQuery(function ($) {
         	//여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
         	//console.log('title :' +operatorData.properties.title);
         	if (operatorData.properties.title == "로그인 기능"){
+				
 				//console.log('input1 :' +operatorData.properties.inputs.input_0.label);
 				operatorData.properties.inputs.input_0.label = '입력ID';
 				operatorData.properties.inputs.input_1.label = '입력PW';

@@ -1,25 +1,59 @@
 package server_setup_generator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//캔버스상에서 input/output 태그를 수정하거나 HTML 파일을 입력으로 넣었을 떄 그 정보를 가지고 있을 서블릿. getData를 하고 메인작업을 시작하기 전 이 클래스 내 메서드를 실행해 업데이트를 한다.
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+//캔버스상에서 input/output 태그를 수정하거나 HTML 파일을 입력으로 넣었을 떄 그 정보를 가지고 있을 서블릿. 
+//staticWebReturn.java에서 getData를 하고 메인작업을 시작하기 전 이 클래스 내 메서드를 실행해 업데이트를 한다.
 //만약 입력받은 HTML 파일에서 form태그가 없다면 경고 메시지를 응답으로 보낸다.
 @WebServlet("/overWriteData")
 public class overWriteData extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
-    public overWriteData() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/*
+	 * public overWriteData() { super(); // TODO Auto-generated constructor stub }
+	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// JSON 데이터 추출
+        BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        String jsonString = sb.toString();
+        System.out.println(jsonString);//
+        
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);//알 수 없는 속성 무시하도록 설정
+        //OperatorData flowchartData = objectMapper.readValue(jsonString, OperatorData.class);
+        
+        //테스트로 ID가 "operator1"인 값의 title을 출력해 보았다. 이걸 
+        //System.out.println("getFlowchartData : " + flowchartData.getFlowchartData().getOperators().
+        		//get("operator1").getProperties().getTitle());
+        
+//response관련 설정
+		 response.setContentType("application/json");
+	     PrintWriter out = response.getWriter();
+	     JSONObject json = new JSONObject();
+	     json.put("result", "overWrite Success");
+	     out.print(json.toString());
 		
 	}
 

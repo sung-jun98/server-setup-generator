@@ -13,6 +13,11 @@ const nonModal_load = function(mutationList){
 				+ /^로그인 기능.*/.test(mutation.addedNodes[0].textContent)){//오퍼레이터 이름이 '로그인 기능'일때만 동작
 				
 					popupContainer.style.display = "block";
+					
+					//jQuery non-modal 테스트코드
+					//$(function() {
+						//$('#popup-container').dialog();
+					//});
 				}
 			//오퍼레이터의 타이틀명을 확인하기 위한 테스트 코드
 			//if(mutation.addedNodes[0] && mutation.addedNodes[0].classList.contains('flowchart-operator')){					

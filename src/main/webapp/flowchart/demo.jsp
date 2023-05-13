@@ -397,13 +397,14 @@
 			//-----------------------------------------
 			
 		});
-//-------시작
+//-------시작-------------------------------------
 //여기서부터 테스트코드(Input/Output 태그를 더블클릭했을 때 변경할 수 있도록 하는 코드)
 
 		// 더블 클릭 이벤트 리스너 등록
 		document.addEventListener('dblclick', function(event) {
 		  // 이벤트가 draggable_operator 클래스를 포함하고 있는지 확인
 		  if (event.target.classList.contains('flowchart-operator-connector-label')) {
+				original_text = event.target.textContent; //보낼 데이터의 키값은 원래 오리지널 텍스트다.
 		    // input 태그 생성
 		    var input = document.createElement('input');
 		    input.type = 'text';
@@ -412,16 +413,85 @@
 		      // input 태그에서 포커스가 벗어났을 때 새로운 텍스트로 대체
 		      event.target.textContent = input.value;
 		    });
+		    
+		    input.addEventListener('keydown', function(eventKey) {
+			      // input 태그에서 엔터를 눌렀을 때 새로운 텍스트로 대체
+			      
+			      if(eventKey.key == 'Enter'){
+			      	eventKey.preventDefault();
+			      	event.target.textContent = input.value;
+			      	//overWriteData.java로 입력한 값을 전송한다.
+			      	var data = {};
+			      	data[original_text] = input.value;
+			      	 $.ajax({
+						    url: '/server_setup_generator/overWriteData',
+						    type: 'POST',
+						    data: JSON.stringify(data),
+						    contentType: 'application/json',
+						    dataType: 'json',
+						    success: function(response) {
+						      console.log('response : ' + response.result);
+						      //console.log(JSON.stringify(data, null, 2));
+						    },
+						    error: function(jqXHR, textStatus, errorThrown) {
+						    	console.log("실패");
+						      console.error('Error sending data: ' + textStatus, errorThrown);
+						    }
+						  });
+			    }
+		    });
 		    // 기존 텍스트 대신 input 태그 삽입
 		    event.target.textContent = '';
 		    event.target.appendChild(input);
 		    input.focus();
-		    
-		    
-		    
-		    
 		  }
 		});
+///////////////////////////////////////
+	//오퍼레이터 내에 필수로 입력해야 하는 input 입력값 위에서 엔터를 입력했을시
+	document.addEventListener('keydown', function(event){
+		if(event.key ==='Enter' && event.target.classList.contains('elasticValueLabel')){
+			event.preventDefault;
+			
+			var id_for_key = event.target.getAttribute('id'); //data객체의 key 값 정의
+			console.log('id : ' + id_for_key);//
+			
+			//보낼 데이터 객체 data{} 정의
+			var data = {};
+			data[id_for_key] = event.target.value;
+			console.log(data);//
+			
+			$.ajax({
+				url: '/server_setup_generator/overWriteData',
+				type: 'POST',
+				data: JSON.stringify(data),
+				contentType: 'application/json',
+				dataType: 'json',
+				 success: function(response) {
+				     console.log('response : ' + response.result);
+				      //console.log(JSON.stringify(data, null, 2));
+				    },
+				    error: function(jqXHR, textStatus, errorThrown) {
+				    	console.log("실패");
+				      console.error('Error sending data: ' + textStatus, errorThrown);
+				    }
+				 });
+				
+		}
+	});
+	/* var essential_Inputs = document.querySelectorAll('.elasticValueLabel');
+	
+	essential_Inputs.forEach(function(element){
+		
+		
+		element.addEventListener('keydown', function(event){
+			if(keydown === 'Enter'){
+				event.preventDefault();
+				
+				 
+			}
+		});
+	
+	}); */
 //----------끝
 //-------------------------------------------
 
