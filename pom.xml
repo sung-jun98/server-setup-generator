@@ -29,10 +29,16 @@
     </dependency>
     <!-- Jackson (JSON 편하게 다루는 라이브러리) -->
     <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.12.3</version>
-</dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.12.3</version>
+	</dependency>
+	<!--CGLIB (코드 실행중 동적으로 클래스를 만들 때 -->
+	<dependency>
+	    <groupId>cglib</groupId>
+	    <artifactId>cglib</artifactId>
+	    <version>3.2.4</version>
+	</dependency>
   </dependencies>
   
 </project>
