@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/test_login")
-public class test_login extends HttpServlet {
+/**
+ * Servlet implementation class test_login_apply
+ */
+@WebServlet("/test_login_apply")
+public class test_login_apply extends HttpServlet {
 	private static final long serialVersionUID = 1L;
- 
+	 
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		userDAO userdao = new userDAO();
@@ -32,5 +34,6 @@ public class test_login extends HttpServlet {
 		}
 	}
 	
+
 
 }

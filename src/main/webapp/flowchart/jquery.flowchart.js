@@ -635,11 +635,22 @@ jQuery(function ($) {
             //$operator_connector_label.text(connectorInfos.label.replace('(:i)', '테스트'));//나중에 지울것
   /////////////////////
   //input/output 태그에 텍스트 대신 input 태그로 사용자 입력을 받을 수 있도록 한다.
-            if(connectorInfos.label === "입력ID"){
+            /*if(connectorInfos.label === "입력ID"){
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputID').attr('placeholder', 'ID').css("width", "100px").addClass('elasticValueLabel');
 			}
 			else if(connectorInfos.label === "입력PW"){
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'Password').css("width", "100px").addClass('elasticValueLabel');
+			}*/
+			if(connectorInfos.label === "입력값input1"){
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data");//
+				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
+			}
+			if(connectorInfos.label === "입력값input2"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputID').attr('placeholder', 'ID태그의 name값').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === "입력값input3"){
+				
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'PW태그의 name값').css("width", "100px").addClass('elasticValueLabel');
 			}
  /////////////////////
             
@@ -683,10 +694,10 @@ jQuery(function ($) {
         	if (operatorData.properties.title == "로그인 기능"){
 				
 				//console.log('input1 :' +operatorData.properties.inputs.input_0.label);
-				operatorData.properties.inputs.input_0.label = '입력ID';
-				operatorData.properties.inputs.input_1.label = '입력PW';
-				operatorData.properties.inputs.input_2.label = '정답ID';
-				operatorData.properties.inputs.input_3.label = '정답PW';
+				operatorData.properties.inputs.input_0.label = '참값';
+				operatorData.properties.inputs.input_1.label = '입력값';
+				//operatorData.properties.inputs.input_2.label = '정답ID';
+				//operatorData.properties.inputs.input_3.label = '정답PW';
 					/*'
 				operatorData.properties.inputs.input_0.label = $('<input>').attr('type', 'text').attr('id', 'inputID').attr('placeholder', 'ID');
 				operatorData.properties.inputs.input_1.label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'Password');
@@ -695,6 +706,20 @@ jQuery(function ($) {
 					*/		
 				operatorData.properties.outputs.output_0.label = '일치';
 				operatorData.properties.outputs.output_1.label = '불일치';
+			}
+			else if(operatorData.properties.title == "참값"){
+				operatorData.properties.inputs.input_0.label = 'DB 테이블명';
+				operatorData.properties.inputs.input_1.label = 'DB내 ID 속성';
+				operatorData.properties.inputs.input_2.label = 'DB내 PW 속성';
+				
+				operatorData.properties.outputs.output_0.label = '참값';
+			}
+			else if(operatorData.properties.title == "입력값"){
+				operatorData.properties.inputs.input_0.label = '입력값input1';
+				operatorData.properties.inputs.input_1.label = '입력값input2';
+				operatorData.properties.inputs.input_2.label = '입력값input3';
+				
+				operatorData.properties.outputs.output_0.label = '입력값';
 			}
         	
         	//// 여기까지 테스트코드

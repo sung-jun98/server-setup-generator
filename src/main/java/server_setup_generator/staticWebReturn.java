@@ -30,8 +30,9 @@ public class staticWebReturn extends HttpServlet {
 	     
 	     //request를 자바 객체 OperatorData로 변환한 메서드
 	     OperatorData objectMapper = parsingJSON(request);
+	     
 	     //---------동적으로 클래스 생성 테스트 코드-----------
-	     loginLogic loginLogic = new loginLogic();
+	     loginLogic loginLogic = new loginLogic(objectMapper);
 	     loginLogic.execute();//
 	     
 		

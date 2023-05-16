@@ -56,7 +56,7 @@
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
 			-->
-			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="2">로그인 기능</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">로그인 기능</div>
 			<!-- 이 밑은 나중에 삭제 혹은 수정할 것 -->
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">회원 가입</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">회원 정보 수정</div>
@@ -122,6 +122,8 @@
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">비밀번호가 틀릴 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">DB오류가 발생했을 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="0">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">참값</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">입력값</div>
 		    
 		    
 		    <button id="close-popup">팝업 닫기</button>
@@ -478,6 +480,24 @@
 				
 		}
 	});
+///////////////////////
+	//HTML 파일을 입력했을 시에 자동으로 ProcessHTML 서블릿으로 연결되게 한다.
+	/* $(document).ready(function(){
+	    // 파일 선택시 자동으로 폼 제출
+	    $('#loginStartPage').change(function(){
+	        $(this).closest('form').submit();
+	    });
+	}); */
+	
+	$(document).ready(function(){
+	    // 캔버스 내의 특정 컨테이너 요소를 대상으로 이벤트 핸들러 추가
+	    $('#flowchartworkspace').on('change', '#loginStartPage', function() {
+	        $(this).closest('form').submit();
+	    });
+	});
+
+////////////////////////////
+
 	/* var essential_Inputs = document.querySelectorAll('.elasticValueLabel');
 	
 	essential_Inputs.forEach(function(element){
