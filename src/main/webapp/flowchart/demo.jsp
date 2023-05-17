@@ -495,6 +495,33 @@
 	        $(this).closest('form').submit();
 	    });
 	});
+	
+	$(document).ready(function(){
+		//$(".fileForm").submit(function(event){
+		$(document).on('submit', '.fileForm', function(event){
+			event.preventDefault(); //기본 폼 제출 동작 방지
+			
+			var formData = new FormData(this);//보내려고 하는 HTML파일이 담긴다.
+			
+			   $.ajax({
+				      url: '/server_setup_generator/processHTML',
+				      type: 'POST',
+				      data: formData,
+				      processData: false,
+				      contentType: false,
+				      success: function(response) {
+				        // 서버 응답에 대한 처리 로직 작성
+				        console.log("HTML 파일 전송 성공");
+				        console.log(response);
+				      },
+				      error: function(xhr, status, error) {
+				        // 에러 처리 로직 작성
+				        console.log("HTML 파일 전송 실패");
+				        console.log(error, status, xhr);
+				      }
+				  });
+		});
+	});
 
 ////////////////////////////
 

@@ -642,7 +642,7 @@ jQuery(function ($) {
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'Password').css("width", "100px").addClass('elasticValueLabel');
 			}*/
 			if(connectorInfos.label === "입력값input1"){
-				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data");//
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
 				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
 			}
 			if(connectorInfos.label === "입력값input2"){
