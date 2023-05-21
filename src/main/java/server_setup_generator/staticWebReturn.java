@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,8 +34,12 @@ public class staticWebReturn extends HttpServlet {
 	     OperatorData objectMapper = parsingJSON(request);
 	     
 	     //---------동적으로 클래스 생성 테스트 코드-----------
-	     loginLogic loginLogic = new loginLogic(objectMapper);
-	     loginLogic.execute();//
+	     operatorData_to_dataHolder converter = new operatorData_to_dataHolder(objectMapper);
+	     dataHolder dh = converter.change();
+	     Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
+	     
+//	     loginLogic loginLogic = new loginLogic(objectMapper);
+//	     loginLogic.execute();//
 	     
 		
     }
@@ -71,7 +77,7 @@ public class staticWebReturn extends HttpServlet {
         
         return flowchartData;
         
-        
+       
 	}
 }
 	

@@ -14,7 +14,7 @@ public class OperatorData {
     }
 	
 }
-
+//선택문 예시) flowchartData.getFlowchartData().getOperators().get("operator1").getProperties().getTitle()
 class FlowchartData{
 	private Map<String, Operator> operators;
     private Map<String, Link> links;
