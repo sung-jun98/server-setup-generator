@@ -45,6 +45,10 @@ public class dbBuilder extends HttpServlet {
 	        }
 	        System.out.print("jsonObject : ");
 	        System.out.println(jsonObject);
+	        
+	        //ServletContext에 DB관련 정보를 입력하는 메서드
+	        putInServletContext(jsonObject);
+	        
 
 //response관련 설정 {result:success}라고 보낸다
 			response.setContentType("application/json");
@@ -52,6 +56,14 @@ public class dbBuilder extends HttpServlet {
 		    JSONObject json = new JSONObject();
 		    json.put("result", "success");
 		    out.print(json.toString());
+	}
+	//전달받은 DB 페이지의 정보를 servletContext에 넣는 메서드
+	public void putInServletContext(JSONObject jsonObject ) {
+		for(String key : jsonObject.keySet()) {
+			String value = jsonObject.getString(key);
+			System.out.println("key : " + key + ",value : " + value);
+		}
+		
 	}
 
 }

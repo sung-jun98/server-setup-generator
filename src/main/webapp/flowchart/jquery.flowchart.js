@@ -692,7 +692,7 @@ jQuery(function ($) {
         	//여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
         	//console.log('title :' +operatorData.properties.title);
         	if (operatorData.properties.title == "로그인 기능"){
-				
+				//operatorData.properties.title = "로그인 기능2"; //테스트용도
 				//console.log('input1 :' +operatorData.properties.inputs.input_0.label);
 				operatorData.properties.inputs.input_0.label = '참값';
 				operatorData.properties.inputs.input_1.label = '입력값';

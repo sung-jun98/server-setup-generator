@@ -3,22 +3,25 @@ package server_setup_generator;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import test.test_login;
 
-//로그인 기능과 관련되어있는 정보를 OperatorData로부터 찾아내어 DataHolder안에 넣는다.
-public class loginLogic extends test_login{
-	OperatorData opDA;
-	public loginLogic(OperatorData opD) {
-		this.opDA = opD; //사용할 데이터 객체를 생성자를 통해서 받아온다.
-		
-		
+//로그인 기능과 관련되어있는 정보를 operatorInfo(DataHolder안에 있는 변수)와 Application Scope로부터 필요한 부분만 추출하는 클래스
+public class loginLogic {
+	private Map<String, Map<String, ArrayList<String>>> operatorInfo;
+	
+	public loginLogic(Map<String, Map<String, ArrayList<String>>> operatorInfo) {
+		this.operatorInfo = operatorInfo; //사용할 데이터 객체를 생성자를 통해서 받아온다.
 	}
-	public void execute() throws IOException {
+	
+	//test_login_apply.java에서 사용할 데이터를 추출한다.
+	public void extract() {
 		
-		System.out.println("loginLogic.excute : " + opDA.getFlowchartData().getOperators().get("operator1").getProperties().getTitle());
+		
 	}
 	
 
