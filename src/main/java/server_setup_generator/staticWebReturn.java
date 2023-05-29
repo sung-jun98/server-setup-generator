@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +36,18 @@ public class staticWebReturn extends HttpServlet {
 	     
 	     //---------동적으로 클래스 생성 테스트 코드-----------
 	     operatorData_to_dataHolder converter = new operatorData_to_dataHolder(objectMapper);
-	     dataHolder dh = converter.change();
-	     Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
+	     dataHolder dh = converter.change(); //단순히 canvas의 내용만이 담겨있는 미완성 dataHolder이다. 
 	     
-//	     loginLogic loginLogic = new loginLogic(objectMapper);
-//	     loginLogic.execute();//
+	     ServletContext sc = getServletContext(); //전달할 ServletContext 생성
+	     loginLogic loginLogic = new loginLogic(dh, sc); //생성한 미완성 dataHolder와 servletContext를 매개변수로 넘긴다.
+	     loginLogic.extract();
+	     dh = loginLogic.getDh(); //dataHolder 내용을 한번 새로 업데이트한다. 여기서 받은 dh 객체를 직렬화해야 한다.
+	     
+//	     System.out.println("업데이트된 dh의 ID는 " + dh.getId());
+//	     System.out.println("업데이트된 dh의 PW는 " + dh.getPassword());
+	     
+	     Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
+
 	     
 		
     }

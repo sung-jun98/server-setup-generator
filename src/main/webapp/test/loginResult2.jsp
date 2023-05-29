@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인 실패 화면</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h2>로그인 실패!</h2>
-	
+
 </body>
 </html>
