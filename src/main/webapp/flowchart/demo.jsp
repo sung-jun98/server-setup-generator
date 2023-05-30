@@ -121,7 +121,7 @@
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">아이디가 없을 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">비밀번호가 틀릴 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">DB오류가 발생했을 경우</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="0">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">참값</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">입력값</div>
 		    
@@ -501,7 +501,11 @@
 		$(document).on('submit', '.fileForm', function(event){
 			event.preventDefault(); //기본 폼 제출 동작 방지
 			
+			var opTitle = $(this).closest('form').parent().parent().parent().parent().siblings('.flowchart-operator-title').text();
 			var formData = new FormData(this);//보내려고 하는 HTML파일이 담긴다.
+			
+			console.log(opTitle);
+			formData.append("opTitle", opTitle); //테스트
 			
 			   $.ajax({
 				      url: '/server_setup_generator/processHTML',

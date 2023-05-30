@@ -641,6 +641,8 @@ jQuery(function ($) {
 			else if(connectorInfos.label === "입력PW"){
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'Password').css("width", "100px").addClass('elasticValueLabel');
 			}*/
+			
+			//input/output 라벨에 텍스트가 아닌 input 태그 등을 넣고 싶을 경우
 			if(connectorInfos.label === "입력값input1"){
 				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
 				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
@@ -651,6 +653,11 @@ jQuery(function ($) {
 			else if(connectorInfos.label === "입력값input3"){
 				
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'inputPW').attr('placeholder', 'PW태그의 name값').css("width", "100px").addClass('elasticValueLabel');
+			}
+			//여긴 아직 미완성
+			if(connectorInfos.label === "리턴페이지input1"){
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
+				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
 			}
  /////////////////////
             
@@ -688,10 +695,13 @@ jQuery(function ($) {
         createOperator: function (operatorId, operatorData) { //새로 연산자를 생성할 함수(위치값 등)
         	//console.log('operatorId' + operatorId);//확인용
         	//console.dir(operatorData);//확인용
-//==============================
-        	//여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
+//==========================================
+//======여기서부터 테스트코드(operator 이름에 따라 Input/Output label값 변경)
+
         	//console.log('title :' +operatorData.properties.title);
         	if (operatorData.properties.title == "로그인 기능"){
+				//중복되는 오퍼레이터가 있는지 확인해본다.
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title); //테스트코드
 				//operatorData.properties.title = "로그인 기능2"; //테스트용도
 				//console.log('input1 :' +operatorData.properties.inputs.input_0.label);
 				operatorData.properties.inputs.input_0.label = '참값';
@@ -721,7 +731,11 @@ jQuery(function ($) {
 				
 				operatorData.properties.outputs.output_0.label = '입력값';
 			}
-        	
+        	else if(operatorData.properties.title == "리턴 페이지"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '리턴페이지input1';
+			}
         	//// 여기까지 테스트코드
 //=============================
             operatorData.internal = {};
@@ -1267,6 +1281,42 @@ jQuery(function ($) {
 
         _refreshInternalProperties: function (operatorData) {
             operatorData.internal.properties = this.getOperatorFullProperties(operatorData);
-        }
+        },
+        
+        //======================================
+        //==========테스트코드================
+        //캔버스 내에 동일한 오퍼레이터가 이미 존재한다면 해당 오퍼레이터의 title 뒤에 숫자를 붙여주도록 수정된 title을 반환한다.
+        checkOpTitle: function(title){
+			var canvas = document.getElementById('chart_container');
+			var titleToReturn = title; //결과적으로 캔버스에 올라갈 오퍼레이터 이름
+			//이미 존재하는 이름인지 확인
+			var existingOperator = canvas.querySelectorAll('.flowchart-operator-title');
+			
+			var arrOfOp = [];
+			//배열 arrOfOp에 검색한 오퍼레이터의 title명을 모두 넣는다.
+			for (var i=0; i<existingOperator.length; i++){
+				arrOfOp[i] = existingOperator[i].innerText;
+			}
+			
+			//만약 매개변수로 넘겨받은 title값이 arrOfOp에 있다면 true.
+			var targetTitle = arrOfOp.includes(title); 
+			
+			if(targetTitle){
+				var count = 2;
+				var newName = title + count;
+				
+				while(arrOfOp.includes(newName)){
+					count += 1;
+					newName = title + count;
+				}
+				titleToReturn = newName;
+			}
+			
+			return titleToReturn;
+			
+		}
+		//==============테스트코드 끝===============
+		//=======================================
+		
     });
 });

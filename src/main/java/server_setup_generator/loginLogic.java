@@ -33,6 +33,7 @@ public class loginLogic {
 		
 		//output_1인 '일치'가 어딘가로 연결되어 있는지 체크
 		//나중에 여기가 어디로 연결되어 있는지도 분기문 더 추가해 볼 것
+		//만약 여기서 연결되어 있는 오퍼레이터가 리턴페이지가 아닐 경우에는 디폴트 경로도 추가해 줄것.
 		if(operatorInfo.get("로그인 기능").get("output_0") != null) {
 			dh.setCorrect_check(true);
 		}else {

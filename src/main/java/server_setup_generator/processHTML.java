@@ -20,12 +20,15 @@ public class processHTML extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("processHTML 서블릿 실행 시작");
+		request.setCharacterEncoding("utf-8"); //한글꺠짐 방지
 		
 		// 이 밑에 getPart를 통해 name속성에 따라 다른 로직이 실행되게끔 분기문으로 조절해야 할 것 같다.
 		Part filePart = request.getPart("loginStartPage"); //HTML 에서 지정한 name 속성으로 Part 인터페이스를 만든다.
 		String filename = filePart.getSubmittedFileName(); //Part 인터페이스에서 파일의 원래 이름을 읽어들이는 메서드.
+		String opTitle = request.getParameter("opTitle");
 		
 		System.out.println("HTML 파일 수신 완료/ filename : " + filename);//테스트용 
+		System.out.println("opTitle은 " + opTitle + '\n');//테스트
 		
 		
 		
