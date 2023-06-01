@@ -1,7 +1,9 @@
 package server_setup_generator;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class staticWebReturn extends HttpServlet {
 	     loginLogic.extract();
 	     dh = loginLogic.getDh(); //dataHolder 내용을 한번 새로 업데이트한다. 여기서 받은 dh 객체를 직렬화해야 한다.
 	     
+	     //여러 단계들을 거치며 완성된 dh객체를 이진화하여 새로운 파일에 생성한다. 
+	     //이렇게 맞춤형으로 이진화된 파일을 클라이언트에게 리턴할 것이다.
+	     dataHolder_to_serial(dh);
 //	     System.out.println("업데이트된 dh의 ID는 " + dh.getId());
 //	     System.out.println("업데이트된 dh의 PW는 " + dh.getPassword());
 	     
@@ -86,6 +91,28 @@ public class staticWebReturn extends HttpServlet {
         return flowchartData;
         
        
+	}
+	
+	//완성된 dataHolder 객체를 이진화하여 클라이언트에게 리턴할 것이다.
+	//어떻게 리턴할지는 아직 안정함
+	public void dataHolder_to_serial(dataHolder dh) {
+		//저장할 파일 경로
+		String directoryPath = "C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\test";
+		String filePath = directoryPath + "/dataHolder.ser"; 
+		
+		try {
+			FileOutputStream fileOut = new FileOutputStream(filePath);
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			
+			objectOut.writeObject(dh); //객체를 직렬화하여 파일에 쓴다.
+			
+			//종료하기 전에 닫아준다.
+			objectOut.close();
+			fileOut.close();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 }
 	

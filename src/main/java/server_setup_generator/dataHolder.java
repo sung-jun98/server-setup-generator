@@ -1,11 +1,12 @@
 package server_setup_generator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 //클래스와 클래스간에 데이터를 주고받을 때 쓰는 중간클래스. 이를 나중에 애플리케이션 스코프에 넣어서 동시성 문제 해결할 것이다. 
-public class dataHolder {
+public class dataHolder implements Serializable {
 	private Map<String, Map<String, ArrayList<String>>> OperatorInfo; // canvas내 operator간의 관계도
 	
 	private String id;
