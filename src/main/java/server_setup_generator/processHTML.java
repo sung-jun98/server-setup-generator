@@ -1,6 +1,11 @@
 package server_setup_generator;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -10,14 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-//input 태그의 file 업로드를 했을 떄 연결될 서블릿. 그리고 이 서블릿의 파싱 결과는 DataHandler에 저장된다.
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+//input 태그의 file 업로드를 했을 떄 연결될 서블릿. 그리고 이 서블릿의 파싱 결과는 ServletContext에 저장된다.
 @WebServlet("/processHTML")
 @MultipartConfig
 public class processHTML extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	/*
-	 * public ProcessHTML() { super(); // TODO Auto-generated constructor stub }
-	 */
+
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("processHTML 서블릿 실행 시작");
 		request.setCharacterEncoding("utf-8"); //한글꺠짐 방지
@@ -27,11 +35,58 @@ public class processHTML extends HttpServlet {
 		String filename = filePart.getSubmittedFileName(); //Part 인터페이스에서 파일의 원래 이름을 읽어들이는 메서드.
 		String opTitle = request.getParameter("opTitle");
 		
-		System.out.println("HTML 파일 수신 완료/ filename : " + filename);//테스트용 
+		//System.out.println("HTML 파일 수신 완료/ filename : " + filename);//테스트용 
 		System.out.println("opTitle은 " + opTitle + '\n');//테스트
+		//파일업로드를 한 오퍼레이터의 title이 키가 되고, 업로드한 파일명이 value가 된 채로 ServletContext에 업로드
+		getServletContext().setAttribute(opTitle, filename); 
 		
-		
-		
+		//우선 오퍼레이터 '입력값'에서 파일을 업로드했을시
+		if(opTitle.equals("입력값")) {
+			
+			//임시 저장할 파일 객체 만들기. 나중에 .jsp확장자 말고 .html일 경우도 정의해주기
+			File tempFile = File.createTempFile("loginTempFile", ".jsp"); 
+			//클라이언트로부터 입력받은 파일을 tempFile에 복사한다.
+			try(InputStream partInputStream = filePart.getInputStream()){
+				Files.copy(partInputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			}catch(IOException e) {
+				System.out.println(e); 
+			}
+			
+			
+			//임시 파일을 Jsoup으로 로드
+			Document doc = Jsoup.parse(tempFile, "UTF-8");
+			
+			Elements forms = doc.select("form");
+			
+			boolean isIDinputExist = false;
+			boolean isPWinputExist = false;
+			String val_of_id = (String) getServletContext().getAttribute("inputID");
+			String val_of_pw = (String) getServletContext().getAttribute("inputPW");
+			System.out.println("val_of_id : " + val_of_id + "\n val_of_pw : " + val_of_pw);
+			//모든 form 내부에 있는 모든 input태그의 name값을 비교
+			for (Element form : forms) {		
+				Elements inputs = form.select("input[name]");
+				for(int i=0; i<inputs.size(); i++) {
+					if(inputs.get(i).attr("name").equals(val_of_id)) {
+						isIDinputExist = true;
+					}else if(inputs.get(i).attr("name").equals(val_of_pw)) {
+						isPWinputExist = true;
+					}
+					
+					//두 input 태그를 모두 포함하는 form일 경우 -> form 태그의 action 속성을 바꾸어준다.
+					if(isIDinputExist && isPWinputExist) {
+						form.attr("action", "../test_login_apply");
+						System.out.println("form의 id값은 : " + form.attr("action"));
+						
+						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
+					}
+					
+				}
+			}
+			
+			
+			tempFile.delete(); 
+		}
 		
 	}
 

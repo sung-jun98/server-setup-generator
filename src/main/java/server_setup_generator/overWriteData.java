@@ -18,9 +18,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//캔버스상에서 input/output 태그를 수정하거나 HTML 파일을 입력으로 넣었을 떄 그 정보를 가지고 있을 서블릿. 
+//캔버스상에서 input/output 태그를 수정했을 때 그 정보를 가지고 있을 서블릿. 
 //staticWebReturn.java에서 getData를 하고 메인작업을 시작하기 전 이 클래스 내 메서드를 실행해 업데이트를 한다.
-//만약 입력받은 HTML 파일에서 form태그가 없다면 경고 메시지를 응답으로 보낸다.
 @WebServlet("/overWriteData")
 public class overWriteData extends HttpServlet {
 	private static final long serialVersionUID = 1L;

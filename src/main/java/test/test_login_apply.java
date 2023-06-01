@@ -30,13 +30,15 @@ public class test_login_apply extends HttpServlet {
 	
 	boolean db_error_check = true; //만약 체크 안되어 있을 경우, 원래 페이지로 리다이렉트 되도록 한다. 
 	String db_error_path = "/server_setup_generator/test/loginResult2.jsp";
+	
+	String login_startPage = "/server_setup_generator/test/loginTest.jsp";
 	 
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		userDAO userdao = new userDAO(); //이거 말고 매개변수를 받는 userDAO()를 하나 더 정의해야 한다. 매개변수는 순서대로 스키마이름, dbID, dbPW, 로그인관련 테이블명, ID필드명, PW필드명
 		System.out.println("ID : " + request.getParameter(id));//
 		System.out.println("PW : " + request.getParameter(password));//
-		
+		  
 		
 		int result = userdao.login(request.getParameter(id), request.getParameter(password));//id, password도 overWriteData를 통해 사용자가 정의한 값으로 대체할 수 있어야 한다.
 		 
@@ -51,9 +53,9 @@ public class test_login_apply extends HttpServlet {
 			response.sendRedirect("/server_setup_generator/test/");
 			}
 		}else if(result == -2 && db_error_check) {//DB오류
-			
+			 	
 		}else {//어느 경우에도 해당 안될 경우. 즉 디폴트값 설정을 여기에 해주면 된다. 
-			
+			response.sendRedirect(login_startPage);
 		}
 	}
 	
