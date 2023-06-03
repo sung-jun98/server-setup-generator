@@ -22,6 +22,8 @@
 	
 	<!-- bootstrap CSS -->
 	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<!-- jquery nonModal css -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 	
 	<style>
 		.flowchart-example-container {
@@ -56,7 +58,7 @@
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
 			-->
-			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">로그인 기능</div>
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2" id="selectOption_login">로그인 기능</div>
 			<!-- 이 밑은 나중에 삭제 혹은 수정할 것 -->
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">회원 가입</div>
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2">회원 정보 수정</div>
@@ -69,33 +71,42 @@
 <!-- -----------------------시작 -->	
 <!-- DB 관련 정보 기입 테스트 -->
 	<br><br>
-	<h4>DB 생성기</h4>
-	<input type="button" onClick="addRow()" value="행 추가" class="btn btn-primary"></input>
 	
-	<form id=Building_DB_form>
-	<hr>
-		<table id="tableForDB" class="table table-striped table-sm">
-	      <thead>
-	        <tr>
-	        	<th>Table Name</th>  
-	            <th>Column Name</th>
-	            <th>Data Type</th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	        <tr>
-	        	<td rowspan="1" id="rowspan_Of_TableName"><input type="text" id="tableName" name="tableName"  class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
-	            <td><input type="text" id="columnName1" name="columnName1" class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
-	            <td><input type="text" id="dataType1" name="dataType1" class="form-control"  style="border:1px solid white; background-color:transparent;"><br></td>
-	            <td><label> <input type="checkbox" id="primaryKey1" name="primaryKey1">PK</label></td>
-	            <td><label> <input type="checkbox" id="notNull1" name="notNull1">NN</label></td>
-	        </tr>
-	      </tbody>
-	      <input type="submit" value="DB 테이블 생성" class="btn btn-primary">
-    </table>
-		
-	<hr>
-	</form>
+	
+	<div id="dialog" title="로그인 관련 추가 오퍼레이터">
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">아이디가 없을 경우</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">비밀번호가 틀릴 경우</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">DB오류가 발생했을 경우</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">참값</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">입력값</div>
+		<form id=Building_DB_form>
+		<hr>
+			<h4>DB 관련 오퍼레이터 생성기</h4>
+			<table id="tableForDB" class="table table-striped table-sm">
+		      <thead>
+		        <tr>
+		        	<th>Table Name</th>  
+		            <th>Column Name</th>
+		            <th>Data Type</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		        	<td rowspan="1" id="rowspan_Of_TableName"><input type="text" id="tableName" name="tableName"  class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+		            <td><input type="text" id="columnName1" name="columnName1" class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+		            <td><input type="text" id="dataType1" name="dataType1" class="form-control"  style="border:1px solid white; background-color:transparent;"><br></td>
+		            <td><label> <input type="checkbox" id="primaryKey1" name="primaryKey1">PK</label></td>
+		            <td><label> <input type="checkbox" id="notNull1" name="notNull1">NN</label></td>
+		        </tr>
+		      </tbody>
+		      <input type="submit" value="DB 테이블 생성" class="btn btn-primary"><nbsp><nbsp>
+		      <input type="button" onClick="addRow()" value="행 추가" class="btn btn-primary"></input>
+	    </table>
+			
+		<hr>
+		</form>
+	</div>
 <!-- .......................끝 -->
 	<!--  <button class="create_operator">Create operator</button>-->
 	
@@ -139,6 +150,15 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 	
 	<script type="text/javascript">
+	//논모달 창 관련 jqeury 
+	/* $( function() {
+		
+	    $( "#dialog" ).dialog({
+	    	width : 600
+	    	
+	    });
+	    
+	  } ); */
 //------------------------------------
 
 		/* global $ */

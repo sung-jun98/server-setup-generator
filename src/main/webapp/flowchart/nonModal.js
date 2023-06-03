@@ -3,6 +3,8 @@ const closePopupBtn = document.getElementById("close-popup");
 const popupContainer = document.getElementById("popup-container");//나타날 모달창
 const canvas = document.getElementById("flowchartworkspace"); //캔버스 
 
+const SelectOption_login = document.getElementById("selectOption_login"); //로그인 오퍼레이터 선택지 
+
 //====================
 //======= 시작 ========새로운 요소가 캔버스에 추가될 때마다 실행될 콜백 함수 정의
 
@@ -11,13 +13,15 @@ const nonModal_load = function(mutationList){
 			//요소가 실제로 추가되었을 떄 실행될 로직 기술
 			if(mutation.addedNodes[0] && mutation.addedNodes[0].classList.contains('flowchart-operator') && 
 				+ /^로그인 기능.*/.test(mutation.addedNodes[0].textContent)){//오퍼레이터 이름이 '로그인 기능'일때만 동작
-				
-					popupContainer.style.display = "block";
+				//jquery에서 지원하는 모달 다이어그램 실행
+				$( function(){
+				    $( "#dialog" ).dialog({
+				    	width : 600
+				    });
+				  });
+					//popupContainer.style.display = "block";
 					
-					//jQuery non-modal 테스트코드
-					//$(function() {
-						//$('#popup-container').dialog();
-					//});
+					
 				}
 			//오퍼레이터의 타이틀명을 확인하기 위한 테스트 코드
 			//if(mutation.addedNodes[0] && mutation.addedNodes[0].classList.contains('flowchart-operator')){					
@@ -46,3 +50,11 @@ popupContainer.addEventListener("click", function(event) {
     //popupContainer.style.display = "none";
   }
 });
+//'로그인 기능' 선택지를 클라이언트가 더블클릭 했을 때 관련 논모달 창 나옴.
+SelectOption_login.addEventListener("dblclick", function(){
+	$( function(){
+		$( "#dialog" ).dialog({
+			width : 600
+		});
+	});
+})
