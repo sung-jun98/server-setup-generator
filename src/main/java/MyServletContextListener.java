@@ -30,25 +30,7 @@ public class MyServletContextListener implements ServletContextListener, Servlet
 	 
 	 
 	 
-		/*
-		 * public MyServletContextListener() { // TODO Auto-generated constructor stub }
-		 * 
-		 * 
-		 * public void attributeAdded(ServletContextAttributeEvent scae) { // TODO
-		 * Auto-generated method stub }
-		 * 
-		 * 
-		 * public void attributeRemoved(ServletContextAttributeEvent scae) { // TODO
-		 * Auto-generated method stub }
-		 * 
-		 * 
-		 * 
-		 * 
-		 * public void attributeReplaced(ServletContextAttributeEvent scae) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * }
-		 */
+		
 
 
 }

@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -76,7 +77,7 @@ public class processHTML extends HttpServlet {
 					//두 input 태그를 모두 포함하는 form일 경우 -> form 태그의 action 속성을 바꾸어준다.
 					if(isIDinputExist && isPWinputExist) {
 						form.attr("action", "../test_login_apply");
-						System.out.println("form의 id값은 : " + form.attr("action"));
+						System.out.println("form의 action 속성값은 : " + form.attr("action"));
 						
 						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
 					}
@@ -86,6 +87,19 @@ public class processHTML extends HttpServlet {
 			
 			
 			tempFile.delete(); 
+		}
+		
+	}
+	
+	//아직 미완성
+	//오퍼레이터 '리턴 페이지'에서 클라이언트가 파일 업로드를 했을 시 
+	private void checkRegex(String opTitle, Part filePart) {
+		//정규식 정의 -> Matcher에 등록. 만약 opTitle이 리턴 페이지로 시작하면 matcher.find() 값은 true, 아닐시 false
+		String pattern = "^리턴 페이지";
+		Matcher matcher = Pattern.compile(pattern).matcher(opTitle);
+		
+		if(matcher.find()) {
+			//이 밑에 리턴 페이지 파일을 물리적으로 저장하는 로직 작성
 		}
 		
 	}
