@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,7 @@ public class staticWebReturn extends HttpServlet {
 	@Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+		
 //response관련 설정
 		 response.setContentType("application/json");
 	     PrintWriter out = response.getWriter();
@@ -36,7 +38,19 @@ public class staticWebReturn extends HttpServlet {
 	     //request를 자바 객체 OperatorData로 변환한 메서드
 	     OperatorData objectMapper = parsingJSON(request);
 	     
-	     //---------동적으로 클래스 생성 테스트 코드-----------
+	 //---------------HttpSession 생성 -------------
+	     //sessionListener sl = new sessionListener();
+	     //String sessionID = sl.getSessionID();
+	     HttpSession session = request.getSession();
+	     String sessionID = session.getId();
+	     System.out.println(sessionID);
+	     //request로부터 추출한 key, value값을 ServletContext에 입력
+	     //getServletContext().setAttribute("sessionID", sessionID);
+	     
+	     //System.out.println("servletContext내부의 sessionID : " + getServletContext().getAttribute("sessionID"));
+	 
+	      
+	      //---------동적으로 클래스 생성 테스트 코드-----------
 	     operatorData_to_dataHolder converter = new operatorData_to_dataHolder(objectMapper);
 	     dataHolder dh = converter.change(); //단순히 canvas의 내용만이 담겨있는 미완성 dataHolder이다. 
 	     
@@ -52,7 +66,7 @@ public class staticWebReturn extends HttpServlet {
 //	     System.out.println("업데이트된 dh의 PW는 " + dh.getPassword());
 	     
 	     Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
-
+	     
 	     
 		
     }

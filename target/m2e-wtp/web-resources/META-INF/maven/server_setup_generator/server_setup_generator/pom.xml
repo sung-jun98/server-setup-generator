@@ -45,6 +45,13 @@
         <artifactId>jsoup</artifactId>
         <version>1.8.2</version>
     </dependency>
+    <!-- cos 라이브러리(파일 업로드 관련 라이브러리) -->
+	<dependency>
+	    <groupId>com.servlets</groupId>
+	    <artifactId>cos</artifactId>
+	    <version>09May2002</version>
+	</dependency>
+
   </dependencies>
   
 </project>
