@@ -44,6 +44,8 @@ public class staticWebReturn extends HttpServlet {
 	     HttpSession session = request.getSession();
 	     String sessionID = session.getId();
 	     System.out.println(sessionID);
+	     
+	     
 	     //request로부터 추출한 key, value값을 ServletContext에 입력
 	     //getServletContext().setAttribute("sessionID", sessionID);
 	     
@@ -54,14 +56,15 @@ public class staticWebReturn extends HttpServlet {
 	     operatorData_to_dataHolder converter = new operatorData_to_dataHolder(objectMapper);
 	     dataHolder dh = converter.change(); //단순히 canvas의 내용만이 담겨있는 미완성 dataHolder이다. 
 	     
-	     ServletContext sc = getServletContext(); //전달할 ServletContext 생성
-	     loginLogic loginLogic = new loginLogic(dh, sc); //생성한 미완성 dataHolder와 servletContext를 매개변수로 넘긴다.
+	     //ServletContext sc = getServletContext(); //전달할 ServletContext 생성
+	     //loginLogic loginLogic = new loginLogic(dh, sc); //생성한 미완성 dataHolder와 servletContext를 매개변수로 넘긴다.
+	     loginLogic loginLogic = new loginLogic(dh, session);
 	     loginLogic.extract();
 	     dh = loginLogic.getDh(); //dataHolder 내용을 한번 새로 업데이트한다. 여기서 받은 dh 객체를 직렬화해야 한다.
 	     
 	     //여러 단계들을 거치며 완성된 dh객체를 이진화하여 새로운 파일에 생성한다. 
 	     //이렇게 맞춤형으로 이진화된 파일을 클라이언트에게 리턴할 것이다.
-	     dataHolder_to_serial(dh);
+	     dataHolder_to_serial(dh, sessionID);
 //	     System.out.println("업데이트된 dh의 ID는 " + dh.getId());
 //	     System.out.println("업데이트된 dh의 PW는 " + dh.getPassword());
 	     
@@ -109,10 +112,10 @@ public class staticWebReturn extends HttpServlet {
 	
 	//완성된 dataHolder 객체를 이진화하여 클라이언트에게 리턴할 것이다.
 	//어떻게 리턴할지는 아직 안정함
-	public void dataHolder_to_serial(dataHolder dh) {
+	public void dataHolder_to_serial(dataHolder dh, String sessionID) {
 		//저장할 파일 경로
 		String directoryPath = "C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\test";
-		String filePath = directoryPath + "/dataHolder.ser"; 
+		String filePath = directoryPath + "/dataHolder" + sessionID + ".ser"; 
 		
 		try {
 			FileOutputStream fileOut = new FileOutputStream(filePath);

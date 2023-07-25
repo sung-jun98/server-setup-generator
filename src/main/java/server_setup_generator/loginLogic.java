@@ -6,17 +6,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 //로그인 기능과 관련되어있는 정보를 operatorInfo(DataHolder안에 있는 변수)와 Application Scope로부터 필요한 부분만 추출하는 클래스
 public class loginLogic {
 	//
 	private dataHolder dh;
-	private ServletContext sc;
+	//private ServletContext sc;
+	private HttpSession sc;
 	private Map<String, Map<String, ArrayList<String>>> operatorInfo;
 	
 	
-	public loginLogic(dataHolder dh, ServletContext sc) {
+	public loginLogic(dataHolder dh, HttpSession sc) {
 		this.dh = dh; //사용할 데이터 객체를 생성자를 통해서 받아온다.
 		this.sc = sc;
 		

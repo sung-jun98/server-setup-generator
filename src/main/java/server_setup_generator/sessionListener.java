@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSessionListener;
 public class sessionListener implements HttpSessionListener  {
 	String sessionID;
 	public sessionListener() {
-		this.sessionID = "";
+		
 	}
 	
     public void sessionCreated(HttpSessionEvent event) {

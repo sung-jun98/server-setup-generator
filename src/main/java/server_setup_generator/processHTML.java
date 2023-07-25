@@ -19,6 +19,7 @@ import javax.servlet.http.Part;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 
 //input 태그의 file 업로드를 했을 떄 연결될 서블릿. 그리고 이 서블릿의 파싱 결과는 ServletContext에 저장된다.
@@ -40,6 +41,7 @@ public class processHTML extends HttpServlet {
 		System.out.println("opTitle은 " + opTitle + '\n');//테스트
 		//파일업로드를 한 오퍼레이터의 title이 키가 되고, 업로드한 파일명이 value가 된 채로 ServletContext에 업로드
 		getServletContext().setAttribute(opTitle, filename); 
+		request.getSession().setAttribute(opTitle, filename);//
 		
 		//우선 오퍼레이터 '입력값'에서 파일을 업로드했을시
 		if(opTitle.equals("입력값")) {
@@ -61,8 +63,11 @@ public class processHTML extends HttpServlet {
 			
 			boolean isIDinputExist = false;
 			boolean isPWinputExist = false;
-			String val_of_id = (String) getServletContext().getAttribute("inputID");
-			String val_of_pw = (String) getServletContext().getAttribute("inputPW");
+			//String val_of_id = (String) getServletContext().getAttribute("inputID");
+			//String val_of_pw = (String) getServletContext().getAttribute("inputPW");
+			String val_of_id = (String) request.getSession().getAttribute("inputID");
+			String val_of_pw = (String) request.getSession().getAttribute("inputPW");
+			
 			System.out.println("val_of_id : " + val_of_id + "\n val_of_pw : " + val_of_pw);
 			//모든 form 내부에 있는 모든 input태그의 name값을 비교
 			for (Element form : forms) {		
@@ -79,6 +84,27 @@ public class processHTML extends HttpServlet {
 						form.attr("action", "../test_login_apply");
 						System.out.println("form의 action 속성값은 : " + form.attr("action"));
 						
+						//form의 내부 속성에 hidden타입의 input을 이용하여 sessionID를 넣어준다.
+						// 새로운 Element 객체 생성
+						Element attrSessionID = doc.createElement("input");
+
+						// Element에 속성 추가
+						attrSessionID.attr("type", "hidden");
+						attrSessionID.attr("name", "sessionID");
+						attrSessionID.attr("value", request.getSession().getId());
+						form.appendChild(attrSessionID);
+						// sessionID 속성 값을 출력
+				        Element sessionInput = form.select("input[name=sessionID]").first();
+				        System.out.println("(processHTML) hidden input의 sessionID : " + sessionInput.attr("value"));
+						/*Tag inputTag = Tag.valueOf("input");
+						 Element sessionInput= new Element("input");
+						 sessionInput.attr("type", "hidden");
+						 sessionInput.attr("name", "sessionId");
+						 sessionInput.attr("value", request.getSession().getId());
+					     form.appendChild(sessionInput);
+					     
+					     System.out.println("(processHTML) hidden input의 sessionID : " + form.attr("sessionID"));
+						*/
 						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
 					}
 					

@@ -25,6 +25,7 @@ public class test_login_apply extends HttpServlet {
 	//만약 dataHolder.ser에 누락된 변수가 있다면 해당 변수들로 디폴트 설정을 해둔다.
 	String id = "id";
 	String password = "password";
+	String sessionID = "";
 	
 	boolean correct_check = true;
 	String correct_path = "/server_setup_generator/test/loginResult.jsp"; 
@@ -43,8 +44,9 @@ public class test_login_apply extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		userDAO userdao = new userDAO(); //이거 말고 매개변수를 받는 userDAO()를 하나 더 정의해야 한다. 매개변수는 순서대로 스키마이름, dbID, dbPW, 로그인관련 테이블명, ID필드명, PW필드명
-		System.out.println("ID : " + request.getParameter(id));//
-		System.out.println("PW : " + request.getParameter(password));//
+		System.out.println("(test_login_apply) ID : " + request.getParameter(id));//
+		System.out.println("(test_login_apply) PW : " + request.getParameter(password));//
+		System.out.println("(test_login_apply) hidden input sessionID : " + request.getParameter(sessionID));
 		  
 		//.ser의 직렬화된 객체를 역직렬화.
 		try {
