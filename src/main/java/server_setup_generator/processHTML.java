@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,8 +21,13 @@ import javax.servlet.http.Part;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
+
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.io.BufferedWriter;
 
 //input 태그의 file 업로드를 했을 떄 연결될 서블릿. 그리고 이 서블릿의 파싱 결과는 ServletContext에 저장된다.
 @WebServlet("/processHTML")
@@ -81,6 +88,7 @@ public class processHTML extends HttpServlet {
 					
 					//두 input 태그를 모두 포함하는 form일 경우 -> form 태그의 action 속성을 바꾸어준다.
 					if(isIDinputExist && isPWinputExist) {
+						System.out.println("form의 action 속성값 변경 전 값은 : " + form.attr("action"));
 						form.attr("action", "../test_login_apply");
 						System.out.println("form의 action 속성값은 : " + form.attr("action"));
 						
@@ -96,16 +104,10 @@ public class processHTML extends HttpServlet {
 						// sessionID 속성 값을 출력
 				        Element sessionInput = form.select("input[name=sessionID]").first();
 				        System.out.println("(processHTML) hidden input의 sessionID : " + sessionInput.attr("value"));
-						/*Tag inputTag = Tag.valueOf("input");
-						 Element sessionInput= new Element("input");
-						 sessionInput.attr("type", "hidden");
-						 sessionInput.attr("name", "sessionId");
-						 sessionInput.attr("value", request.getSession().getId());
-					     form.appendChild(sessionInput);
-					     
-					     System.out.println("(processHTML) hidden input의 sessionID : " + form.attr("sessionID"));
-						*/
+						
+				        
 						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
+				        saveAtServer(doc); 
 					}
 					
 				}
@@ -115,6 +117,20 @@ public class processHTML extends HttpServlet {
 			tempFile.delete(); 
 		}
 		
+	}
+	
+	//수정한 임시파일을 서버내 webapp 폴더에 저장하는 메서드
+	private void saveAtServer(Document doc) {
+		// Document 객체를 HTML 파일로 저장
+        File outputFile = new File("C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\main\\webapp\\test\\test1.jsp");
+        try {
+        	BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile,  StandardCharsets.UTF_8));
+        	writer.write(Parser.unescapeEntities(doc.outerHtml(), false)); // Document 객체를 HTML 문자열로 변환하여 파일에 기록
+            writer.close();
+            System.out.println("Document 객체를 파일로 저장했습니다.");
+        } catch (IOException e) {
+            System.err.println("파일 저장에 실패했습니다: " + e.getMessage());
+        }
 	}
 	
 	//아직 미완성
