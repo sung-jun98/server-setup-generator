@@ -8,7 +8,7 @@
    <input type="text" id="id" name="id" placeholder="아이디"> 
    <input type="text" id="password" name="password" placeholder="패스워드"> 
    <input type="submit" value="로그인"> 
-   <input type="hidden" name="sessionID" value="B873D540193EEC8BB4F81C6F83F77CF3">
+   <input type="hidden" name="sessionID" value="3698EAD4C3E6DC88CBB4D8B872414C72">
   </form>  
  </body>
 </html>

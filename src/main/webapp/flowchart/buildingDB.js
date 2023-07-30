@@ -68,7 +68,7 @@ function making_operatios_of_DB(data){ //디비의 속성을 다이어그램으�
 		
 		const newElement = document.createElement("div");
 		newElement.className = "draggable_operator ui-draggable ui-draggable-handle btn btn-outline-secondary";
-		newElement.setAttribute("data-nb-inputs", "0");
+		newElement.setAttribute("data-nb-inputs", "1");
 		newElement.setAttribute("data-nb-outputs", "1");
 		newElement.textContent = data[columnName];
 		document.querySelector(".draggable_operators_divs").appendChild(newElement);

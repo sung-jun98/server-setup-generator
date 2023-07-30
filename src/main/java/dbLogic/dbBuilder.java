@@ -1,4 +1,4 @@
-package server_setup_generator;
+package dbLogic;
 
 import java.io.BufferedReader;
 import java.io.IOException;

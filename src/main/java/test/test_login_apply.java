@@ -26,6 +26,7 @@ public class test_login_apply extends HttpServlet {
 	String id = "id";
 	String password = "password";
 	String sessionID = "";
+	String dataHolderPath = "dataHolder.ser";
 	
 	boolean correct_check = true;
 	String correct_path = "/server_setup_generator/test/loginResult.jsp"; 
@@ -45,9 +46,10 @@ public class test_login_apply extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		userDAO userdao = new userDAO(); //이거 말고 매개변수를 받는 userDAO()를 하나 더 정의해야 한다. 매개변수는 순서대로 스키마이름, dbID, dbPW, 로그인관련 테이블명, ID필드명, PW필드명
 		System.out.println("(test_login_apply) ID : " + request.getParameter("id"));//
-		System.out.println("(test_login_apply) PW : " + request.getParameter("userPassword"));//
+		System.out.println("(test_login_apply) PW : " + request.getParameter("password"));//
 		System.out.println("(test_login_apply) hidden input sessionID : " + request.getParameter("sessionID"));
 		
+		dataHolderPath = "dataHolder" + (String) request.getParameter("sessionID") + ".ser";
 		//.ser의 직렬화된 객체를 역직렬화.
 		try {
 			this.dh = deserializeDataHolder();
@@ -59,6 +61,7 @@ public class test_login_apply extends HttpServlet {
 		analyzeDataHolder(dh); //역직렬화된 dh의 맞춤형 변수 가져옴
 		
 		System.out.println("=======================================");
+		System.out.println("dataHolderPath의 이름은 " + this.dataHolderPath);
 		System.out.println(".ser로부터 받은 id는 " + id);
 		System.out.println(".ser로부터 받은 password는 " + password);
 		System.out.println(".ser로부터 받은 correct_check는 " + correct_check);
@@ -67,6 +70,8 @@ public class test_login_apply extends HttpServlet {
 		System.out.println(".ser로부터 받은 db_error_check는 " + db_error_check);
 		System.out.println("역직렬화한 loginStartPage : " + login_startPage);
 		System.out.println("역직렬화한 id_error_path : " + id_error_path);
+		System.out.println("역직렬화한 pw_error_path : " + pw_error_path);
+		System.out.println("역직렬화한 db_error_path : " + db_error_path);
 		System.out.println("=======================================");
 		
 		//===================================================
@@ -95,7 +100,8 @@ public class test_login_apply extends HttpServlet {
 	//직렬화된 dataHolder 역직렬화 해주는 메서드
 	private dataHolder deserializeDataHolder() throws ClassNotFoundException {
 		//.ser가 있는 경로
-		String filePath = "C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\test\\dataHolder.ser";
+		//String filePath = "C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\test\\dataHolder.ser";
+		String filePath = "C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\test\\" + this.dataHolderPath;
 		
 		try {
 			FileInputStream fileIn = new FileInputStream(filePath);
@@ -124,11 +130,13 @@ public class test_login_apply extends HttpServlet {
 		this.correct_check = dh.isCorrect_check();
 		
 		this.db_error_check = dh.isDb_error_check();
+		this.db_error_path = dh.getDb_error_path();
 		
 		this.id_error_check = dh.isId_error_check();
 		this.id_error_path = dh.getId_error_path();
 		
 		this.pw_error_check = dh.isPw_error_check();
+		this.pw_error_path = dh.getPw_error_path();
 		
 		if(dh.getLogin_startPage() != null) {
 			this.login_startPage = dh.getLogin_startPage();
