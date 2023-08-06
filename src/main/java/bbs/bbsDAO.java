@@ -43,7 +43,7 @@ public class bbsDAO {
 	
 	//현재 업로드 하는 게시물이 몇번째 게시물인지 얻어온다.
 	public int getNext() {
-		String SQL = "SELECT bbsID FROM BBS ORDER BY bbdID DESC";
+		String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC";
 		try {
 			PreparedStatement psmt = conn.prepareStatement(SQL);
 			rs = psmt.executeQuery();
@@ -68,10 +68,11 @@ public class bbsDAO {
 			pstmt.setString(3, userID);
 			pstmt.setString(4, getDate());
 			pstmt.setString(5, bbsContent);
-			pstmt.setInt(6, 1);
+			pstmt.setInt(6, 1); 
+			
 
 			
-			return pstmt.executeUpdate();
+			return pstmt.executeUpdate(); //실행 결과(정수값) 리턴
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -48,7 +48,7 @@ public class overWriteData extends HttpServlet {
         
         System.out.println("servletContext 수정전: "  + getServletContext().getAttribute((String)req_key));
         
-        //request로부터 추출한 key, value값을 ServletContext에 입력
+        //request로부터 추출한 key, value값을 session에 입력
         getServletContext().setAttribute((String)req_key, req_val);
         System.out.println("servletContext 수정후: "  + getServletContext().getAttribute((String)req_key));
         

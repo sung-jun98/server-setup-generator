@@ -24,7 +24,15 @@ public class dataHolder implements Serializable {
 	private boolean db_error_check; //만약 체크 안되어 있을 경우, 원래 페이지로 리다이렉트 되도록 한다. 
 	private String db_error_path = "/server_setup_generator/test/loginResult2.jsp";
 	
-	private String login_startPage; //만약 실패시 연결 페이지를 설정 안했다면, 디폴트로 해당 페이지로 이동하도록 한다.
+	private String login_startPage; //만약 실패시 연결 페이지를 설정 안했다면, 디폴트로 해당 페이지로 이동하도록 한다.\
+	
+	//==============게시물 작성(writeAction)에 관한 변수==============
+	private String bbsTitle = "bbsTitle";
+	private String bbsContent = "bbsContent";
+	private String userID = "userID"; //게시물을 올린 유저의 HTML파일내 name태그명
+	
+	private String successPath = "flowchart/demo.jsp"; //결과가 성공적일시 연결될 페이지
+	//=========================================
 	
 	//OperatorInfo에 대한 getter
 	public Map<String, Map<String, ArrayList<String>>> getOperatorInfo() {
@@ -177,6 +185,38 @@ public class dataHolder implements Serializable {
 		public void setDb_error_path(String db_error_path) {
 			this.db_error_path = "/server_setup_generator/test/" + db_error_path;
 			System.out.println("dataHoler에 set해진 db_error_path는 " + this.db_error_path);//테스트
+		}
+		//==========여기서부터 BBS Write관련 setter/getter============
+		public String getBbsTitle() {
+			return bbsTitle;
+		}
+
+		public void setBbsTitle(String bbsTitle) {
+			this.bbsTitle = bbsTitle;
+		}
+
+		public String getBbsContent() {
+			return bbsContent;
+		}
+
+		public void setBbsContent(String bbsContent) {
+			this.bbsContent = bbsContent;
+		}
+
+		public String getUserID() {
+			return userID;
+		}
+
+		public void setUserID(String userID) {
+			this.userID = userID;
+		}
+
+		public String getSuccessPath() {
+			return successPath;
+		}
+
+		public void setSuccessPath(String successPath) {
+			this.successPath = "../" + successPath;
 		}
 }
 

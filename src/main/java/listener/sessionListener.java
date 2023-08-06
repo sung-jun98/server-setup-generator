@@ -6,10 +6,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-/**
- * Application Lifecycle Listener implementation class sessionListener
- *
- */
+
 @WebListener
 public class sessionListener implements HttpSessionListener, HttpSessionAttributeListener {
 	// 세션이 생성될 때 초기화 작업 수행
@@ -21,7 +18,12 @@ public class sessionListener implements HttpSessionListener, HttpSessionAttribut
         event.getSession().setAttribute("inputPW", "password");
         event.getSession().setAttribute("id_DB", "userID");
         event.getSession().setAttribute("pw_DB", "userPW");
-         
+        
+        event.getSession().setAttribute("bbsTitle", "bbsTitle");
+        event.getSession().setAttribute("bbsContent", "bbsContent");
+        event.getSession().setAttribute("userID", "userID");
+        
+        
     }
 	public void attributeAdded(HttpSessionBindingEvent event) {
         // 세션에 속성이 추가될 때 처리 작업 수행

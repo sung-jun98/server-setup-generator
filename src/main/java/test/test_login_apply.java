@@ -49,7 +49,7 @@ public class test_login_apply extends HttpServlet {
 		System.out.println("(test_login_apply) PW : " + request.getParameter("password"));//
 		System.out.println("(test_login_apply) hidden input sessionID : " + request.getParameter("sessionID"));
 		
-		dataHolderPath = "dataHolder" + (String) request.getParameter("sessionID") + ".ser";
+		this.dataHolderPath = "dataHolder" + (String) request.getParameter("sessionID") + ".ser";
 		//.ser의 직렬화된 객체를 역직렬화.
 		try {
 			this.dh = deserializeDataHolder();
@@ -121,7 +121,7 @@ public class test_login_apply extends HttpServlet {
 	}
 	
 	//역직렬화된 dataHolder로부터 맞춤형 변수 값들을 가져옴.
-	//아직 path는 추가 안해줬음. 나중에 loginLogic 완성하고 마저 완성할것
+	//아직 path는 추가 안해줬음. 나중에 loginLogic 완성하고 마저 완성할것 -> 완성함
 	private void analyzeDataHolder(dataHolder dh) {
 		
 		this.id = dh.getId();

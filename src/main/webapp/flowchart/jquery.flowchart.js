@@ -659,6 +659,21 @@ jQuery(function ($) {
 				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
 				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
 			}
+			
+			//게시물 작성 관련 기능
+			if(connectorInfos.label === "웹페이지input0"){
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
+				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
+			}
+			else if(connectorInfos.label === "웹페이지input1"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle').attr('placeholder', '제목 태그명').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === "웹페이지input2"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle').attr('placeholder', '유저ID 태그').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === "웹페이지input3"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle').attr('placeholder', '게시물 내용의 태그').css("width", "100px").addClass('elasticValueLabel');
+			}
  /////////////////////
             
            
@@ -735,6 +750,38 @@ jQuery(function ($) {
 				//동일한 title명이 있다면 하나씩 정수를 올린다.	
 				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
 				operatorData.properties.inputs.input_0.label = '리턴페이지input1';
+			}
+			//============게시물 작성==============
+			else if(operatorData.properties.title == "게시물 작성"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '웹페이지';
+				
+				operatorData.properties.outputs.output_0.label = '연결 페이지';
+				operatorData.properties.outputs.output_1.label = '저장할 DB정보';
+			}
+			else if(operatorData.properties.title == "웹페이지"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '웹페이지input0';
+				operatorData.properties.inputs.input_1.label = '웹페이지input1';
+				operatorData.properties.inputs.input_2.label = '웹페이지input2';
+				operatorData.properties.inputs.input_3.label = '웹페이지input3';
+				
+				operatorData.properties.outputs.output_0.label = '게시물 작성으로';
+				
+			}
+			else if(operatorData.properties.title == "저장할 DB 정보"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '저장할DB정보input0';
+				
+				operatorData.properties.inputs.output_0.label = '저장할DB정보output0';
+				operatorData.properties.inputs.output_1.label = '저장할DB정보output1';
+				operatorData.properties.inputs.output_2.label = '저장할DB정보output2';
+				
+				
+				
 			}
         	//// 여기까지 테스트코드
 //=============================

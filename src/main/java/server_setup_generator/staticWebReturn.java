@@ -22,6 +22,8 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import bbs.writeActionLogic;
+
 @WebServlet(urlPatterns = "/staticWebReturn", loadOnStartup = 1) // 웰컴 페이지 설정
 public class staticWebReturn extends HttpServlet {
 	@Override
@@ -58,17 +60,22 @@ public class staticWebReturn extends HttpServlet {
 	     
 	     //ServletContext sc = getServletContext(); //전달할 ServletContext 생성
 	     //loginLogic loginLogic = new loginLogic(dh, sc); //생성한 미완성 dataHolder와 servletContext를 매개변수로 넘긴다.
+	     //=======로그인 관련========
 	     loginLogic loginLogic = new loginLogic(dh, session);
 	     loginLogic.extract();
 	     dh = loginLogic.getDh(); //dataHolder 내용을 한번 새로 업데이트한다. 여기서 받은 dh 객체를 직렬화해야 한다.
 	     
+	     //=======게시물 업로드 관련======
+	     writeActionLogic writeActionLogic = new writeActionLogic(dh, session);
+	     writeActionLogic.extract();
+	     dh = loginLogic.getDh();
 	     //여러 단계들을 거치며 완성된 dh객체를 이진화하여 새로운 파일에 생성한다. 
-	     //이렇게 맞춤형으로 이진화된 파일을 클라이언트에게 리턴할 것이다.
+	     
 	     dataHolder_to_serial(dh, sessionID);
 //	     System.out.println("업데이트된 dh의 ID는 " + dh.getId());
 //	     System.out.println("업데이트된 dh의 PW는 " + dh.getPassword());
 	     
-	     Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
+	     //Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
 	     
 	     
 		
