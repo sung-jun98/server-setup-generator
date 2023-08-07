@@ -70,7 +70,6 @@ public class bbsDAO {
 			pstmt.setString(5, bbsContent);
 			pstmt.setInt(6, 1); 
 			
-
 			
 			return pstmt.executeUpdate(); //실행 결과(정수값) 리턴
 		} catch(Exception e) {

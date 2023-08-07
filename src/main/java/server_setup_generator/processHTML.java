@@ -34,7 +34,6 @@ import java.io.BufferedWriter;
 @MultipartConfig
 public class processHTML extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("processHTML 서블릿 실행 시작");
@@ -72,6 +71,7 @@ public class processHTML extends HttpServlet {
 			boolean isPWinputExist = false;
 			// String val_of_id = (String) getServletContext().getAttribute("inputID");
 			// String val_of_pw = (String) getServletContext().getAttribute("inputPW");
+			//문제가 하나 생긴게, 클라이언트가 태그명을 입력하기 전에 미리 웹사이트 먼저 업로드를 한다면, 밑의 코드 결과 디폴트값이 적용된다. 
 			String val_of_id = (String) request.getSession().getAttribute("inputID");
 			String val_of_pw = (String) request.getSession().getAttribute("inputPW");
 
@@ -106,10 +106,88 @@ public class processHTML extends HttpServlet {
 						System.out.println("(processHTML) hidden input의 sessionID : " + sessionInput.attr("value"));
 
 						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
-						saveAtServer(doc);
+						saveAtServer(doc, filename);
 					}
 
 				}
+			}
+
+			tempFile.delete();
+		//게시물 작성 -> 웹페이지일때 
+		}else if(opTitle.equals("웹페이지")){
+			
+			// 임시 저장할 파일 객체 만들기. 나중에 .jsp확장자 말고 .html일 경우도 정의해주기
+			File tempFile = File.createTempFile("writeActionTempFile", ".jsp");
+			// 클라이언트로부터 입력받은 파일을 tempFile에 복사한다.
+			try (InputStream partInputStream = filePart.getInputStream()) {
+				Files.copy(partInputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				System.out.println(e);
+			}
+
+			// 임시 파일을 Jsoup으로 로드
+			Document doc = Jsoup.parse(tempFile, "UTF-8");
+			
+			Elements forms = doc.select("form");
+
+			boolean isBbsTitleExist = false;
+			boolean isBbsContentExist = false;
+			//boolean isUserIDExist = false;
+			
+			//문제가 하나 생긴게, 클라이언트가 태그명을 입력하기 전에 미리 웹사이트 먼저 업로드를 한다면, 밑의 코드 결과 디폴트값이 적용된다. 
+			String val_of_bbsTitle = (String) request.getSession().getAttribute("bbsTitle");
+			String val_of_bbsContent = (String) request.getSession().getAttribute("bbsContent");
+			//String val_of_userID = (String) request.getSession().getAttribute("userID");
+
+			//System.out.println("val_of_id : " + val_of_id + "\n val_of_pw : " + val_of_pw);
+			// 모든 form 내부에 있는 모든 input태그의 name값을 비교
+			for (Element form : forms) {
+				Elements inputs = form.select("input[name]");
+				Elements textareas = form.select("textarea[name]"); //bbsContent의 태그가 input이 아니라 textarea일 가능성이 높다.
+				
+				for (int i = 0; i < inputs.size(); i++) {
+					if (inputs.get(i).attr("name").equals(val_of_bbsTitle)) {
+						isBbsTitleExist = true;
+					} else if (inputs.get(i).attr("name").equals(val_of_bbsContent)) {
+						isBbsContentExist = true;
+					}
+				
+					
+					System.out.println("(processHTML) " + isBbsTitleExist + " / "  + isBbsContentExist);
+					
+				}
+				
+				for (int i = 0; i < textareas.size(); i++) {
+						if (textareas.get(i).attr("name").equals(val_of_bbsTitle)) {
+							isBbsTitleExist = true;
+						} else if (textareas.get(i).attr("name").equals(val_of_bbsContent)) {
+							isBbsContentExist = true;
+						}
+						System.out.println("(processHTML) " + isBbsTitleExist + " / "  + isBbsContentExist);
+					}
+				
+				// 두 input 태그를 모두 포함하는 form일 경우 -> form 태그의 action 속성을 바꾸어준다.
+				if (isBbsTitleExist && isBbsContentExist) {
+						System.out.println("form의 action 속성값 변경 전 값은 : " + form.attr("action"));//
+						form.attr("action", "../writeAction");
+						System.out.println("form의 action 속성값은 : " + form.attr("action"));//
+
+						// form의 내부 속성에 hidden타입의 input을 이용하여 sessionID를 넣어준다.
+						// 새로운 Element 객체 생성
+						Element attrSessionID = doc.createElement("input");
+
+						// Element에 속성 추가
+						attrSessionID.attr("type", "hidden");
+						attrSessionID.attr("name", "sessionID");
+						attrSessionID.attr("value", request.getSession().getId());
+						form.appendChild(attrSessionID);
+						// sessionID 속성 값을 출력
+						Element sessionInput = form.select("input[name=sessionID]").first();
+						System.out.println("(processHTML) hidden input의 sessionID : " + sessionInput.attr("value"));
+
+						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
+						saveAtServer(doc, filename);
+					}
 			}
 
 			tempFile.delete();
@@ -118,10 +196,10 @@ public class processHTML extends HttpServlet {
 	}
 
 	// 수정한 임시파일을 서버내 webapp 폴더에 저장하는 메서드
-	private void saveAtServer(Document doc) {
+	private void saveAtServer(Document doc, String filename) {
 		// Document 객체를 HTML 파일로 저장
 		File outputFile = new File(
-				"C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\main\\webapp\\test\\test1.jsp");
+				"C:\\Users\\tjdwn\\Dev\\Workspace\\server_setup_generator\\src\\main\\webapp\\test\\" + filename);
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, StandardCharsets.UTF_8));
 			writer.write(Parser.unescapeEntities(doc.outerHtml(), false)); // Document 객체를 HTML 문자열로 변환하여 파일에 기록

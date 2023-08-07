@@ -72,8 +72,8 @@ public class staticWebReturn extends HttpServlet {
 	     //여러 단계들을 거치며 완성된 dh객체를 이진화하여 새로운 파일에 생성한다. 
 	     
 	     dataHolder_to_serial(dh, sessionID);
-//	     System.out.println("업데이트된 dh의 ID는 " + dh.getId());
-//	     System.out.println("업데이트된 dh의 PW는 " + dh.getPassword());
+	     System.out.println("업데이트된 dh의 userID는 " + dh.getUserID());
+	     System.out.println("업데이트된 dh의 successPath는 " + dh.getSuccessPath());
 	     
 	     //Map<String, Map<String, ArrayList<String>>> operatorInfo = dh.getOperatorInfo(); //이제 여기 operatorInfo를 통해서 canvas의 정보에 대해 쉽게 접근할 수 있다.
 	     

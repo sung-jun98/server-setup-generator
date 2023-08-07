@@ -669,10 +669,10 @@ jQuery(function ($) {
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle').attr('placeholder', '제목 태그명').css("width", "100px").addClass('elasticValueLabel');
 			}
 			else if(connectorInfos.label === "웹페이지input2"){
-				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle').attr('placeholder', '유저ID 태그').css("width", "100px").addClass('elasticValueLabel');
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'userID').attr('placeholder', '유저ID 태그').css("width", "100px").addClass('elasticValueLabel');
 			}
 			else if(connectorInfos.label === "웹페이지input3"){
-				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle').attr('placeholder', '게시물 내용의 태그').css("width", "100px").addClass('elasticValueLabel');
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsContent').attr('placeholder', '게시물 내용의 태그').css("width", "100px").addClass('elasticValueLabel');
 			}
  /////////////////////
             
@@ -774,11 +774,11 @@ jQuery(function ($) {
 			else if(operatorData.properties.title == "저장할 DB 정보"){
 				//동일한 title명이 있다면 하나씩 정수를 올린다.	
 				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
-				operatorData.properties.inputs.input_0.label = '저장할DB정보input0';
+				operatorData.properties.inputs.input_0.label = '저장할DB정보';
 				
-				operatorData.properties.inputs.output_0.label = '저장할DB정보output0';
-				operatorData.properties.inputs.output_1.label = '저장할DB정보output1';
-				operatorData.properties.inputs.output_2.label = '저장할DB정보output2';
+				operatorData.properties.outputs.output_0.label = '게시물 제목';
+				operatorData.properties.outputs.output_1.label = '작성 날짜';
+				operatorData.properties.outputs.output_2.label = '유저ID';
 				
 				
 				

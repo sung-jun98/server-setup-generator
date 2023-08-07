@@ -30,7 +30,20 @@ public class writeActionLogic {
 	
 	//hs로부터 특징 추출 -> dh에 set한다.
 	public void extract() {
+		dh.setBbsTitle((String)hs.getAttribute("bbsTitle"));
+		dh.setBbsContent((String)hs.getAttribute("bbsContent"));
+		dh.setUserID((String)hs.getAttribute("userID"));
 		
+		//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
+		if(operatorInfo.get("게시물 작성").get("output_0") != null) {
+			String outputOp_title_of_writeAction= operatorInfo.get("게시물 작성").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
+			
+			
+			outputOp_title_of_writeAction = checkRegex(outputOp_title_of_writeAction);
+			dh.setSuccessPath((String) hs.getAttribute(outputOp_title_of_writeAction));
+		}
+		
+		//이 밑에 DB관련 설정도 해줘야 할듯
 	}
 	
 	//연결되어 있는 오퍼레이터의 타이틀이 예상과 일치하는지 정규식을 통해 체크하고 리턴하는 메서드

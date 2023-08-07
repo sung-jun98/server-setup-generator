@@ -46,11 +46,11 @@ public class overWriteData extends HttpServlet {
         String req_key = jsonMap.keySet().stream().findFirst().orElse(null);
         String req_val= (String)jsonMap.get(jsonMap.keySet().stream().findFirst().orElse(null));
         
-        System.out.println("servletContext 수정전: "  + getServletContext().getAttribute((String)req_key));
+        //System.out.println("servletContext 수정전: "  + getServletContext().getAttribute((String)req_key));
         
         //request로부터 추출한 key, value값을 session에 입력
         getServletContext().setAttribute((String)req_key, req_val);
-        System.out.println("servletContext 수정후: "  + getServletContext().getAttribute((String)req_key));
+        //System.out.println("servletContext 수정후: "  + getServletContext().getAttribute((String)req_key));
         
         request.getSession().setAttribute((String)req_key, req_val);
         System.out.println("(overwriteData)session내의 값 : " + request.getSession().getAttribute((String)req_key));
