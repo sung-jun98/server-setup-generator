@@ -216,7 +216,7 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setSuccessPath(String successPath) {
-			this.successPath = "../" + successPath;
+			this.successPath = "../test/" + successPath;
 		}
 }
 

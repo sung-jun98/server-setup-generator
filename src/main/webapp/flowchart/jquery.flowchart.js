@@ -674,6 +674,10 @@ jQuery(function ($) {
 			else if(connectorInfos.label === "웹페이지input3"){
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsContent').attr('placeholder', '게시물 내용의 태그').css("width", "100px").addClass('elasticValueLabel');
 			}
+			else if(connectorInfos.label === '저장할DB정보output0'){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'dbTableNameBBS').attr('placeholder', '저장할 Table명').css("width", "100px").addClass('elasticValueLabel');
+
+			}
  /////////////////////
             
            
@@ -776,9 +780,12 @@ jQuery(function ($) {
 				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
 				operatorData.properties.inputs.input_0.label = '저장할DB정보';
 				
-				operatorData.properties.outputs.output_0.label = '게시물 제목';
-				operatorData.properties.outputs.output_1.label = '작성 날짜';
-				operatorData.properties.outputs.output_2.label = '유저ID';
+				operatorData.properties.outputs.output_0.label = '저장할DB정보output0';
+				operatorData.properties.outputs.output_1.label = '게시물 번호';
+				operatorData.properties.outputs.output_2.label = '게시물 제목';
+				operatorData.properties.outputs.output_3.label = '유저ID';
+				operatorData.properties.outputs.output_4.label = '작성 날짜';
+				operatorData.properties.outputs.output_5.label = '게시물 내용';
 				
 				
 				

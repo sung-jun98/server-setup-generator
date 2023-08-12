@@ -17,6 +17,7 @@ import server_setup_generator.dataHolder;
 @WebServlet("/writeAction")
 public class writeAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	dataHolder dh;
     //필요한 설정 변수들 디폴트값 정의 -> 나중에 dataHolder로부터 deserialize 한 값으로 덮어씌울 것이다.
 	String bbsTitle = "bbsTitle";
 	String bbsContent = "bbsContent";
@@ -31,8 +32,15 @@ public class writeAction extends HttpServlet {
 		bbsDAO bbsDAO = new bbsDAO();
 		this.dataHolderPath = "dataHolder" + (String) request.getParameter("sessionID") + ".ser";
 
-		//이 밑에 dataHolder 역직렬화 넣어야 한다. 
-		
+		//dataHolder 역직렬화 
+		try {
+			this.dh = deserializeDataHolder();
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		//dataHolder로부터 분석
+		analyzeDataHolder(this.dh);
 		//==============================================
 		//==========여기서부터 실질적인 게시물 업로드 로직=========
 		
@@ -86,26 +94,15 @@ public class writeAction extends HttpServlet {
 		}
 	
 	//역직렬화된 dataHolder로부터 맞춤 데이터 추출하는 함수 구현해야 한다.
-		/*
-	private void analyzeDataHolder(dataHolder dh) {
 		
-		this.id = dh.getId();
-		this.password = dh.getPassword();
-			
-		this.correct_check = dh.isCorrect_check();
-			
-		this.db_error_check = dh.isDb_error_check();
-		this.db_error_path = dh.getDb_error_path();
-			
-		this.id_error_check = dh.isId_error_check();
-		this.id_error_path = dh.getId_error_path();
-			
-		this.pw_error_check = dh.isPw_error_check();
-		this.pw_error_path = dh.getPw_error_path();
-			
-		if(dh.getLogin_startPage() != null) {
-			this.login_startPage = dh.getLogin_startPage();
-		};
-			
-	}*/
+	private void analyzeDataHolder(dataHolder dh) {
+		this.bbsTitle = dh.getBbsTitle();
+		this.bbsContent = dh.getBbsContent();
+		this.userID = dh.getUserID();
+		
+		this.successPath = dh.getSuccessPath();
+		
+		
+		
+	}
 }

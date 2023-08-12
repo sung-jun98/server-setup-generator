@@ -112,12 +112,12 @@
 	<div id="dialog_writeAction" title="게시물 업로드 관련 추가 오퍼레이터" style="display:none;">
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="1">웹페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="3">저장할 DB 정보</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="6">저장할 DB 정보</div>
 		 
-		<form id=Building_DB_form>
+		<form id=Building_DB_form2>
 		<hr>
 			<h4>DB 관련 오퍼레이터 생성기</h4>
-			<table id="tableForDB" class="table table-striped table-sm">
+			<table id="tableForDB2" class="table table-striped table-sm">
 		      <thead>
 		        <tr>
 		        	<th>Table Name</th>  
@@ -127,7 +127,7 @@
 		      </thead>
 		      <tbody>
 		        <tr>
-		        	<td rowspan="1" id="rowspan_Of_TableName"><input type="text" id="tableName" name="tableName"  class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+		        	<td rowspan="1" id="rowspan_Of_TableName2"><input type="text" id="tableName" name="tableName"  class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
 		            <td><input type="text" id="columnName1" name="columnName1" class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
 		            <td><input type="text" id="dataType1" name="dataType1" class="form-control"  style="border:1px solid white; background-color:transparent;"><br></td>
 		            <td><label> <input type="checkbox" id="primaryKey1" name="primaryKey1">PK</label></td>
@@ -135,7 +135,7 @@
 		        </tr>
 		      </tbody>
 		      <input type="submit" value="DB 테이블 생성" class="btn btn-primary"><nbsp><nbsp>
-		      <input type="button" onClick="addRow()" value="행 추가" class="btn btn-primary"></input>
+		      <input type="button" onClick="addRow2()" value="행 추가" class="btn btn-primary"></input>
 	    </table>
 			
 		<hr>
