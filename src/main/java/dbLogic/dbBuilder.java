@@ -53,7 +53,7 @@ public class dbBuilder extends HttpServlet {
 	        
 
 	        //session scope에 DB관련 정보를 입력하는 메서드
-	        checkJSONObject(jsonObject);
+	        //checkJSONObject(jsonObject);
 	        
 
 //response관련 설정 {result:success}라고 보낸다
@@ -64,14 +64,14 @@ public class dbBuilder extends HttpServlet {
 		    out.print(json.toString());
 	}
 	//전달받은 DB 페이지의 정보를 servletContext에 넣는 메서드
-	public void checkJSONObject(JSONObject jsonObject ) {
-		for(String key : jsonObject.keySet()) {
-			String value = jsonObject.getString(key);
-			System.out.println("key : " + key + ",value : " + value);
-		}
-		
-	}
-	
+//	public void checkJSONObject(JSONObject jsonObject ) {
+//		for(String key : jsonObject.keySet()) {
+//			String value = jsonObject.getString(key);
+//			System.out.println("key : " + key + ",value : " + value);
+//		}
+//		
+//	}
+//	
 	//CREATE할 SQL문을 jsonObject로부터 추출하여 완성하는 메서드
 	public String makeFullSQL(JSONObject jsonObject) {
 		int i = 1;

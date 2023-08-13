@@ -26,9 +26,10 @@ import bbs.writeActionLogic;
 
 @WebServlet(urlPatterns = "/staticWebReturn", loadOnStartup = 1) // 웰컴 페이지 설정
 public class staticWebReturn extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	@Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+		
 		
 //response관련 설정
 		 response.setContentType("application/json");

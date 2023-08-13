@@ -7,8 +7,10 @@ import java.util.Map;
 
 //클래스와 클래스간에 데이터를 주고받을 때 쓰는 중간클래스. 이를 나중에 애플리케이션 스코프에 넣어서 동시성 문제 해결할 것이다. 
 public class dataHolder implements Serializable {
+	//private static final long serialVersionUID = 1L;
 	private Map<String, Map<String, ArrayList<String>>> OperatorInfo; // canvas내 operator간의 관계도
 	
+	//==============로그인 관련(loginLogic)에 관한 변수================
 	private String id;
 	private String password;
 	
@@ -32,6 +34,15 @@ public class dataHolder implements Serializable {
 	private String userID = "userID"; //게시물을 올린 유저의 HTML파일내 name태그명
 	
 	private String successPath = "flowchart/demo.jsp"; //결과가 성공적일시 연결될 페이지
+	
+	//DB의 속성
+	private String bbsTableName_db = "bbs";
+	private String bbsID_db = "bbsID";
+	private String bbsTitle_db = "bbsTitle";
+	private String userID_db = "userID";
+	private String bbsDate_db = "bbsDate";
+	private String bbsContent_db = "bbsContent";
+	private String bbsAvailable_db = "bbsAvailable";
 	//=========================================
 	
 	//OperatorInfo에 대한 getter
@@ -216,7 +227,63 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setSuccessPath(String successPath) {
-			this.successPath = "../test/" + successPath;
+			this.successPath = "/server_setup_generator/test/" + successPath;
+		}
+
+		public String getBbsTableName_db() {
+			return bbsTableName_db;
+		}
+
+		public void setBbsTableName_db(String bbsTableName_db) {
+			this.bbsTableName_db = bbsTableName_db;
+		}
+
+		public String getBbsID_db() {
+			return bbsID_db;
+		}
+
+		public void setBbsID_db(String bbsID_db) {
+			this.bbsID_db = bbsID_db;
+		}
+
+		public String getBbsTitle_db() {
+			return bbsTitle_db;
+		}
+
+		public void setBbsTitle_db(String bbsTitle_db) {
+			this.bbsTitle_db = bbsTitle_db;
+		}
+
+		public String getUserID_db() {
+			return userID_db;
+		}
+
+		public void setUserID_db(String userID_db) {
+			this.userID_db = userID_db;
+		}
+
+		public String getBbsDate_db() {
+			return bbsDate_db;
+		}
+
+		public void setBbsDate_db(String bbsDate_db) {
+			this.bbsDate_db = bbsDate_db;
+		}
+
+		public String getBbsContent_db() {
+			return bbsContent_db;
+		}
+
+		public void setBbsContent_db(String bbsContent_db) {
+			this.bbsContent_db = bbsContent_db;
+		}
+
+		public String getBbsAvailable_db() {
+			return bbsAvailable_db;
+		}
+
+		public void setBbsAvailable_db(String bbsAvailable_db) {
+			this.bbsAvailable_db = bbsAvailable_db;
 		}
 }
 

@@ -24,11 +24,11 @@ public class sessionListener implements HttpSessionListener, HttpSessionAttribut
         event.getSession().setAttribute("userID", "userID");
         //'저장할 DB정보'오퍼레이터의 디폴트 Attr값 
         event.getSession().setAttribute("dbTableNameBBS", "bbs");
-        event.getSession().setAttribute("bbsID_db", "bbsID");
-        event.getSession().setAttribute("bbsTitle_db", "bbsTitle");
-        event.getSession().setAttribute("userID_db", "userID");
-        event.getSession().setAttribute("bbsDate_db", "bbsDate");
-        event.getSession().setAttribute("bbsAvailable_db", "bbsAvailable");
+//        event.getSession().setAttribute("bbsID_db", "bbsID");
+//        event.getSession().setAttribute("bbsTitle_db", "bbsTitle");
+//        event.getSession().setAttribute("userID_db", "userID");
+//        event.getSession().setAttribute("bbsDate_db", "bbsDate");
+//        event.getSession().setAttribute("bbsAvailable_db", "bbsAvailable");
 
         
         

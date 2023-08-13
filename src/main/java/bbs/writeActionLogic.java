@@ -34,6 +34,8 @@ public class writeActionLogic {
 		dh.setBbsContent((String)hs.getAttribute("bbsContent"));
 		dh.setUserID((String)hs.getAttribute("userID"));
 		
+		
+		
 		//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
 		if(operatorInfo.get("게시물 작성").get("output_0") != null) {
 			String outputOp_title_of_writeAction= operatorInfo.get("게시물 작성").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
@@ -43,7 +45,30 @@ public class writeActionLogic {
 			dh.setSuccessPath((String) hs.getAttribute(outputOp_title_of_writeAction));
 		}
 		
-		//이 밑에 DB관련 설정도 해줘야 할듯
+		//'저장할 DB 정보'와 연결되어있는 DB 속성 관련 정보
+		dh.setBbsTableName_db((String) hs.getAttribute("dbTableNameBBS"));
+		
+		if(operatorInfo.get("저장할 DB 정보").get("output_1") != null) {
+			String outputOp_title_of_bbsID= operatorInfo.get("저장할 DB 정보").get("output_1").get(0);//'저장할 DB 정보' 오퍼레이터와 연결된 첫번째 오퍼레이터의 title 출력됨
+			dh.setBbsID_db(outputOp_title_of_bbsID);
+		}
+		if(operatorInfo.get("저장할 DB 정보").get("output_2") != null) {
+			String outputOp_title_of_bbsTitle= operatorInfo.get("저장할 DB 정보").get("output_2").get(0);//'저장할 DB 정보' 오퍼레이터와 연결된 첫번째 오퍼레이터의 title 출력됨
+			dh.setBbsTitle_db(outputOp_title_of_bbsTitle);
+		}
+		if(operatorInfo.get("저장할 DB 정보").get("output_3") != null) {
+			String outputOp_title_of_bbsUserID= operatorInfo.get("저장할 DB 정보").get("output_3").get(0);//'저장할 DB 정보' 오퍼레이터와 연결된 첫번째 오퍼레이터의 title 출력됨
+			dh.setUserID_db(outputOp_title_of_bbsUserID);
+		}
+		if(operatorInfo.get("저장할 DB 정보").get("output_4") != null) {
+			String outputOp_title_of_bbsDate= operatorInfo.get("저장할 DB 정보").get("output_4").get(0);//'저장할 DB 정보' 오퍼레이터와 연결된 첫번째 오퍼레이터의 title 출력됨
+			dh.setBbsDate_db(outputOp_title_of_bbsDate);
+		}
+		if(operatorInfo.get("저장할 DB 정보").get("output_5") != null) {
+			String outputOp_title_of_bbsContent= operatorInfo.get("저장할 DB 정보").get("output_5").get(0);//'저장할 DB 정보' 오퍼레이터와 연결된 첫번째 오퍼레이터의 title 출력됨
+			dh.setBbsContent_db(outputOp_title_of_bbsContent);
+		}
+		
 	}
 	
 	//연결되어 있는 오퍼레이터의 타이틀이 예상과 일치하는지 정규식을 통해 체크하고 리턴하는 메서드

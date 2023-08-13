@@ -202,6 +202,11 @@
 		$(document).ready(function() {
 			var $flowchart = $('#flowchartworkspace');
 			var $container = $flowchart.parent();
+			//===============================================
+			//===========panzoom/panout 테스트코드==============
+			
+		    //===============panzoom/panout 테스트코드 끝===========
+		    //==================================================
 
 
 			// Apply the plugin on a standard, empty div...

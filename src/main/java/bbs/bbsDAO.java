@@ -10,6 +10,17 @@ public class bbsDAO {
 	private Connection conn;
 	private ResultSet rs;
 	
+	//DB의 속성
+	private String bbsTableName = "bbs";
+	private String bbsID = "bbsID";
+	private String bbsTitle = "bbsTitle";
+	private String userID = "userID";
+	private String bbsDate = "bbsDate";
+	private String bbsContent = "bbsContent";
+	private String bbsAvailable = "bbsAvailable";
+	
+
+	
 	public bbsDAO() { //생성자
 		try {
 		String dbURL = "jdbc:mysql://localhost:3306/jspdb";
@@ -23,6 +34,32 @@ public class bbsDAO {
 				e.printStackTrace();
 			}
 		System.out.println("(bbsDAO) bbsDAO 성공");// 테스트용. 나중에 삭제할것
+	}
+	
+	//dataHolder로부터 추출한 '저장할 DB정보' 오퍼레이터와 연결된 속성으로 바꾸어주는 메서드
+	public void setAttr(String bbsTableName, String bbsID, String bbsTitle, String userID, String bbsDate, 
+			String bbsContent, String bbsAvailable) {
+		if(bbsTableName != null) {
+			this.bbsTableName = bbsTableName;
+		}
+		if(bbsID != null) {
+			this.bbsID = bbsID;
+		}
+		if(bbsTitle != null) {
+			this.bbsTitle = bbsTitle;
+		}
+		if(userID != null) {
+			this.userID = userID;
+		}
+		if(bbsDate != null) {
+			this.bbsDate = bbsDate;
+		}
+		if(bbsContent != null) {
+			this.bbsContent = bbsContent;
+		}
+		if(bbsAvailable != null) {
+			this.bbsAvailable = bbsAvailable;
+		}
 	}
 	
 	//작성된 시각을 알기 위한 메서드
@@ -60,7 +97,13 @@ public class bbsDAO {
 	
 	//작성한 게시물 저장
 	public int write(String bbsTitle, String userID, String bbsContent) {
-		String SQL = "INSERT INTO BBS VALUES(?, ?, ?, ?, ?, ?)";
+		this.bbsAvailable = "attr6"; //테스트용. 나중에 demo.jsp랑 flowchart.js까지 다 수정하고 마지막에 지울것
+		//String SQL = "INSERT INTO BBS VALUES(?, ?, ?, ?, ?, ?)";
+		//String SQL = "INSERT INTO BBS (bbsID, bbsTitle, userID, bbsDate, bbsContent, bbsAvailable) VALUES(?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO " + this.bbsTableName + "(" + this.bbsID + ", " + this.bbsTitle + ", "
+				+ this.userID + ", " + this.bbsDate + ", " + this.bbsContent + ", "
+				+ this.bbsAvailable + ") VALUES(?, ?, ?, ?, ?, ?)"; 
+		System.out.println("(bbsDAO.write()) 완성된 SQL문은 " + SQL);
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
