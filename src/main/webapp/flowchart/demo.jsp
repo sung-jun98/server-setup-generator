@@ -24,6 +24,10 @@
 	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	<!-- jquery nonModal css -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<!-- sidebar w3school CSS -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<!-- tooltip css 
+	<link rel="stylesheet" href="../tooltip/tooltip.css">-->
 	
 	<style>
 		.flowchart-example-container {
@@ -37,14 +41,39 @@
 </head>
 
 <body>
-	<h1>2018305012 김성준</h1>
-	<!-- 
-	<h4>Sample created with basis on some from Sebastien Drouyer, original author's <a href="https://sebastien.drouyer.com/jquery.flowchart-demo/">website</a>.</h4>
-	 -->
-	<h4>Flowchart</h4>
+	
+
+	 <!-- ---------------사이드바 구현------------------- -->
+	 <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+		  <button class="w3-bar-item w3-button w3-large"
+		  onclick="w3_close()">Close &times;</button>
+		  <!--
+		  <div class="w3-bar-item w3-button"> hello </div>
+		  <a href="#" class="w3-bar-item w3-button">Link 1</a>
+		  <a href="#" class="w3-bar-item w3-button">Link 2</a>
+		  <a href="#" class="w3-bar-item w3-button">Link 3</a>
+		   -->
+		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2" id="selectOption_login">로그인 기능</div>
+		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2" id="writeAction">게시물 작성</div>
+		 
+		  <button class="get_data btn btn-outline-secondary" id="get_data" style="bottom:5px; position:absolute; left: 30%;">Get data</button>
+		  
+	</div>
+	<div id="main">
+	<div class="w3-teal">
+	  <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776; </button>
+	  <div class="w3-container">	
+	    <h1>Server Setup Generator</h1>
+	    
+	    
+	  </div>
+	</div>
+	
+	 <!--  ---------------여기까지 사이드바--------------- -->
 	<div id="chart_container">
 		<div class="flowchart-example-container" id="flowchartworkspace"></div>
 	</div>
+	<!-- </div>  사이드바와 캔버스를 수평으로 배치하기 위해 div로 감싼다 -->
 	<button class="delete_selected_button">Delete selected operator / link</button>
 	<div class="draggable_operators">
 		<div class="draggable_operators_label">
@@ -112,7 +141,7 @@
 	<div id="dialog_writeAction" title="게시물 업로드 관련 추가 오퍼레이터" style="display:none;">
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="1">웹페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="6">저장할 DB 정보</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="7">저장할 DB 정보</div>
 		 
 		<form id=Building_DB_form2>
 		<hr>
@@ -179,14 +208,35 @@
 	  	</div>
 	</div>
 	
+	<!-- 사이드바 -->
+	</div> <!-- <div main> 닫음 -->
+	<!--  툴팁 테스트코드 -->
+	<div class="tooltip" id="tooltip">툴팁</div>
+	
 	<script src="../modal/nonModal.js"></script>
 	<!--  여기까지 모달창 테스트코드 -->
 	<!-- DB관련 정보 전송용 스크립트 -->
 	<script src="buildingDB.js"></script>
 	<!-- Bootstrap js script -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+	<!-- tooltip 관련 스크립트 
+	<script src="../tooltip/tooltip.js"></script>-->
 	
 	<script type="text/javascript">
+	//============================
+	//======sidebar 관련 메서드=======
+	function w3_open() {
+	    document.getElementById("main").style.marginLeft = "25%";
+	    document.getElementById("mySidebar").style.width = "25%";
+	    document.getElementById("mySidebar").style.display = "block";
+	    document.getElementById("openNav").style.display = 'none';
+	}
+	function w3_close() {
+	    document.getElementById("main").style.marginLeft = "0%";
+	    document.getElementById("mySidebar").style.display = "none";
+	    document.getElementById("openNav").style.display = "inline-block";
+	}
+	//==============================
 	//논모달 창 관련 jqeury 
 	/* $( function() {
 		

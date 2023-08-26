@@ -786,6 +786,7 @@ jQuery(function ($) {
 				operatorData.properties.outputs.output_3.label = '유저ID';
 				operatorData.properties.outputs.output_4.label = '작성 날짜';
 				operatorData.properties.outputs.output_5.label = '게시물 내용';
+				operatorData.properties.outputs.output_6.label = '게시물 가용여부';
 				
 				
 				

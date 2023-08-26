@@ -97,7 +97,7 @@ public class bbsDAO {
 	
 	//작성한 게시물 저장
 	public int write(String bbsTitle, String userID, String bbsContent) {
-		this.bbsAvailable = "attr6"; //테스트용. 나중에 demo.jsp랑 flowchart.js까지 다 수정하고 마지막에 지울것
+		//this.bbsAvailable = "attr6"; //테스트용. 나중에 demo.jsp랑 flowchart.js까지 다 수정하고 마지막에 지울것
 		//String SQL = "INSERT INTO BBS VALUES(?, ?, ?, ?, ?, ?)";
 		//String SQL = "INSERT INTO BBS (bbsID, bbsTitle, userID, bbsDate, bbsContent, bbsAvailable) VALUES(?, ?, ?, ?, ?, ?)";
 		String SQL = "INSERT INTO " + this.bbsTableName + "(" + this.bbsID + ", " + this.bbsTitle + ", "
