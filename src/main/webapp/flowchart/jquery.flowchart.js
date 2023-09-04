@@ -676,8 +676,17 @@ jQuery(function ($) {
 			}
 			else if(connectorInfos.label === '저장할DB정보output0'){
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'dbTableNameBBS').attr('placeholder', '저장할 Table명').css("width", "100px").addClass('elasticValueLabel');
-
 			}
+			
+			//게시물 삭제 관련 기능
+			if(connectorInfos.label === "삭제페이지input0"){
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
+				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
+			}
+			else if(connectorInfos.label === "삭제페이지input1"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle_delete').attr('placeholder', '제목 태그명').css("width", "100px").addClass('elasticValueLabel');
+			}
+			
  /////////////////////
             
            
@@ -788,9 +797,35 @@ jQuery(function ($) {
 				operatorData.properties.outputs.output_5.label = '게시물 내용';
 				operatorData.properties.outputs.output_6.label = '게시물 가용여부';
 				
+			}
+			//============게시물 삭제==============
+			else if(operatorData.properties.title == "게시물 삭제"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '삭제 페이지';
+				operatorData.properties.inputs.input_1.label = '삭제할DB정보';
 				
+				operatorData.properties.outputs.output_0.label = '리턴 페이지';
+			}
+			else if(operatorData.properties.title == "삭제 페이지"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '삭제페이지input0';
+				operatorData.properties.inputs.input_1.label = '삭제페이지input1';
+				
+				operatorData.properties.outputs.output_0.label = '게시물 삭제';
+			}
+			else if(operatorData.properties.title == "삭제할 DB 정보"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = 'DB 테이블 속성';
+				operatorData.properties.inputs.input_1.label = 'DB 타이틀 속성';
+				
+				operatorData.properties.outputs.output_0.label = '게시물 삭제';
 				
 			}
+			//================게시물 삭제================
+			
         	//// 여기까지 테스트코드
 //=============================
             operatorData.internal = {};

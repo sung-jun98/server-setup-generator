@@ -69,6 +69,38 @@ $(function() {
 		//draggable_operator로 만들어 주는 코드를 작성해야 한다.
 	});
 	
+	//====================================================================
+	//=========게시물 삭제 관련 논모달창에서 DB테이블 생성 버튼을 눌렀을 때=============
+	$('#Building_DB_form3').submit(function(e) {
+	    e.preventDefault(); // 기본적인 form submit 동작 방지
+		const formData = $('#Building_DB_form3').serializeArray();
+	//console.dir("$('#Building_DB_form').serializeArray() : " + formData );//테스트용
+		const data = {};
+		
+		formData.forEach(function(element) {
+		  data[element.name] = element.value;
+		});
+	//console.dir	("data  : " + data);//테스트용
+	console.log("JSON.stringify(data)  : " + JSON.stringify(data));//테스트용
+	
+		making_operatios_of_DB(data); //작성한 DB테이블을 바탕으로 선택할수 있는 오퍼레이션을 만든다.
+	
+		$.ajax({
+		  url: '/server_setup_generator/dbBuilder',
+		  method: 'POST',
+		  data: JSON.stringify(data),
+		  contentType: 'application/json',
+		  success: function(response) {
+		    console.log(response);
+		  },
+		  error: function(jqXHR, textStatus, errorThrown) {
+		    console.error(jqXHR);
+		  }
+		});
+		
+		//이 밑에 Submit 버튼을 눌렀을 시, columnName(1, 2, 3...)들의 내용들을 모두 draggable_operators_divs 밑에
+		//draggable_operator로 만들어 주는 코드를 작성해야 한다.
+	});
 });
 
 function addRow(){ //DB 생성 표의 행 추가 버튼 기능 구현
@@ -109,6 +141,25 @@ function addRow2(){ //DB 생성 표의 행 추가 버튼 기능 구현
 		
 	}
 	
+function addRow3(){ //DB 생성 표의 행 추가 버튼 기능 구현
+		var tableForDB = document.getElementById("tableForDB3");
+		var newRow = tableForDB.insertRow();
+		var cell1 = newRow.insertCell();
+		var cell2 = newRow.insertCell();
+		var cell3 = newRow.insertCell();
+		var cell4 = newRow.insertCell();
+		
+		count += 1; //새로 추가할 열의 HTML 속성명의 index이므로 하나씩 늘려준다.
+		
+		document.getElementById("rowspan_Of_TableName3").setAttribute("rowspan", count); //TableName이 차지하는 면적 늘려줌
+		cell1.innerHTML = '<input type="text" id="columnName' + count + '" name="columnName' + count + '"  class="form-control"  style="border:1px solid white; background-color:transparent;">';
+		cell2.innerHTML = '<input type="text" id="dataType' + count + '" name="dataType' + count + '"  class="form-control"  style="border:1px solid white; background-color:transparent;">';
+		cell3.innerHTML = '<label> <input type="checkbox" id="primaryKey' + count + '" name="primaryKey' + count + '">PK</label>';
+		cell4.innerHTML = '<label> <input type="checkbox" id="notNull' + count + '" name="notNull' + count + '">NN</label>';
+		
+		
+	}
+	
 function making_operatios_of_DB(data){ //디비의 속성을 다이어그램으로 다룰 수 있도록 캔버스에 오퍼레이터를 추가한다.
 	
 	var draggable_operators_divs = document.getElementsByClassName("draggable_operators_divs");
@@ -124,7 +175,8 @@ function making_operatios_of_DB(data){ //디비의 속성을 다이어그램으�
 		newElement.setAttribute("data-nb-inputs", "1");
 		newElement.setAttribute("data-nb-outputs", "1");
 		newElement.textContent = data[columnName];
-		document.querySelector(".draggable_operators_divs").appendChild(newElement);
+		//document.querySelector(".draggable_operators_divs").appendChild(newElement);
+		document.querySelector("#mySidebar").appendChild(newElement);
 		init_operators_of_DB();//다시 초기화 진행
 		//<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">1 output</div>
 	}

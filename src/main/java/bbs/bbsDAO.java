@@ -121,6 +121,26 @@ public class bbsDAO {
 		return -1; //데이터베이스 오류
 	}
 	
+	//게시물 삭제
+	public int delete(int bbsID) {
+		//DELETE FROM BBS WHERE bbsID = 3;
+		String SQL = "DELETE FROM " + this.bbsTableName + " WHERE " + this.bbsID + " = ?";
+		System.out.println("(bbsDAO.write()) 완성된 SQL문은 " + SQL);
+		// JDBC 연결 및 PreparedStatement 설정
+        try {
+        	PreparedStatement pstmt = conn.prepareStatement(SQL);
+            // 바인딩 변수 설정
+        	pstmt.setInt(1, bbsID);
+        	
+            // DELETE 문 실행
+            return pstmt.executeUpdate(); //실행결과(리턴값) 반환
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1; //데이터베이스 오류
+		
+	}
 	
 }
 
