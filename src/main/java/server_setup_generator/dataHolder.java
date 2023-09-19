@@ -43,7 +43,10 @@ public class dataHolder implements Serializable {
 	private String bbsDate_db = "bbsDate";
 	private String bbsContent_db = "bbsContent";
 	private String bbsAvailable_db = "bbsAvailable";
-	//=========================================
+	//===============게시물 삭제(deleteAction)에 관한 변수==========================
+	
+	
+	//========================================
 	
 	//OperatorInfo에 대한 getter
 	public Map<String, Map<String, ArrayList<String>>> getOperatorInfo() {
@@ -285,6 +288,8 @@ public class dataHolder implements Serializable {
 		public void setBbsAvailable_db(String bbsAvailable_db) {
 			this.bbsAvailable_db = bbsAvailable_db;
 		}
+		
+		//==========여기서부터 BBS delete관련 setter/getter============
 }
 
 

@@ -497,6 +497,17 @@
 				    contentType: 'application/json',//
 				    dataType: 'json',//
 				    success: function(response) {
+				    	
+				    	// 파일 입력란을 선택
+				    	var fileInput = $('#loginStartPage')[0];
+				    	// 선택한 파일의 이름을 가져옵니다.
+				    	var selectedFileName = fileInput.files[0].name; 
+				    	console.log('selectedFileName : ' + selectedFileName);
+				    	// 리다이렉트 URL 변수 완성
+				    	var redirectURL = '/server_setup_generator/test/' + selectedFileName;
+				    	// 클라이언트 측에서 리다이렉트
+				    	window.location.href = redirectURL;
+				    	
 				      console.log('response : ' + response.result);
 				      //console.log(JSON.stringify(data, null, 2));
 				    },

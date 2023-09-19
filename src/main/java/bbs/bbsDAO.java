@@ -122,15 +122,15 @@ public class bbsDAO {
 	}
 	
 	//게시물 삭제
-	public int delete(int bbsID) {
+	public int delete(String bbsTitle) {
 		//DELETE FROM BBS WHERE bbsID = 3;
-		String SQL = "DELETE FROM " + this.bbsTableName + " WHERE " + this.bbsID + " = ?";
+		String SQL = "DELETE FROM " + this.bbsTableName + " WHERE " + this.bbsTitle + " = ?";
 		System.out.println("(bbsDAO.write()) 완성된 SQL문은 " + SQL);
 		// JDBC 연결 및 PreparedStatement 설정
         try {
         	PreparedStatement pstmt = conn.prepareStatement(SQL);
             // 바인딩 변수 설정
-        	pstmt.setInt(1, bbsID);
+        	pstmt.setString(1, bbsTitle);
         	
             // DELETE 문 실행
             return pstmt.executeUpdate(); //실행결과(리턴값) 반환
