@@ -81,16 +81,23 @@ public class test_login_apply extends HttpServlet {
 		 
 		if (result == 1 && correct_check) {//로그인 성공시
 			//if(correct_check) {
-				response.sendRedirect("/server_setup_generator/test/loginResult.jsp");//완료 경로 역시 사용자의 입력값에 따라 바꾸어 주어야 한다.
+				//response.sendRedirect("/server_setup_generator/test/loginResult.jsp");//완료 경로 역시 사용자의 입력값에 따라 바꾸어 주어야 한다.
 			//}	
+				response.sendRedirect(login_startPage);
 				System.out.println("로그인 성공");
 		} else if(result == 0 && pw_error_check) {//비밀번호 틀렸을 시
+			
+			response.sendRedirect(pw_error_path);
 			System.out.println("비밀번호 틀림");
+			
 		} else if(result == -1 && id_error_check) { //아이디가 없음
 			if(id_error_check) {
-			response.sendRedirect("/server_setup_generator/test/");
+				
+			response.sendRedirect(id_error_path);
+			
 			}
 		}else if(result == -2 && db_error_check) {//DB오류
+			response.sendRedirect(db_error_path);
 			 System.out.println("DB오류 일어남\n");
 		}else {//어느 경우에도 해당 안될 경우. 즉 디폴트값 설정을 여기에 해주면 된다. 
 			response.sendRedirect(login_startPage);

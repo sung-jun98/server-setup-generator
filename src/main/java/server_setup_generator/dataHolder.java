@@ -171,7 +171,8 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setCorrect_path(String correct_path) {
-			this.correct_path = correct_path;
+			//this.correct_path = correct_path;
+			this.correct_path = "/server_setup_generator/test/" + correct_path;
 		}
 
 		public String getId_error_path() {

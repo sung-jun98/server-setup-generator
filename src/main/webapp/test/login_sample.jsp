@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!doctype html>
 <html lang="ko">
- <head> 
+ <head></head>
+ <body>
+  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
   <meta charset="UTF-8"> 
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
@@ -14,11 +13,7 @@
   <meta property="og:image:width" content="1200"> 
   <meta property="og:image:height" content="630"> 
   <title>네이버 : 로그인</title> 
-  <link rel="stylesheet" type="text/css" href="https://nid.naver.com/login/css/global/desktop/w_20220216.css?20210812">
-   
-  
- </head> 
- <body> 
+  <link rel="stylesheet" type="text/css" href="https://nid.naver.com/login/css/global/desktop/w_20220216.css?20210812">   
   <div id="wrap" class="wrap"> 
    <div class="u_skip">
     <a href="https://www.naver.com">본문 바로가기</a>
@@ -111,8 +106,8 @@
           </div> 
          </div> </li> 
        </ul> 
-       <input type="hidden" name="sessionID" value="5F79B370032CCFE6D66059A483E469B7">
-       <input type="hidden" name="sessionID" value="5F79B370032CCFE6D66059A483E469B7">
+       <input type="hidden" name="sessionID" value="9838E60CFF070E4207BA4008788D5487">
+       <input type="hidden" name="sessionID" value="9838E60CFF070E4207BA4008788D5487">
       </form> 
      </div> 
      <ul class="find_wrap" id="find_wrap"> 
