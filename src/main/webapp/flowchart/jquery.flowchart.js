@@ -656,8 +656,11 @@ jQuery(function ($) {
 			}
 			//여긴 아직 미완성
 			if(connectorInfos.label === "리턴페이지input1"){
-				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//fileForm : 해당 요소가 있는 오퍼레이터 이름 검색해서 서버로 보냄
 				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
+			}
+			else if(connectorInfos.label ==="리턴페이지input2"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'URLAdress').attr('placeholder', '연결할 URL주소').css("width", "100px").addClass('elasticValueLabel'); //elasticValueLabel : 같이 정의된 id태그를 서버로 보냄
 			}
 			
 			//게시물 작성 관련 기능
@@ -763,6 +766,7 @@ jQuery(function ($) {
 				//동일한 title명이 있다면 하나씩 정수를 올린다.	
 				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
 				operatorData.properties.inputs.input_0.label = '리턴페이지input1';
+				operatorData.properties.inputs.input_1.label = '리턴페이지input2';
 			}
 			//============게시물 작성==============
 			else if(operatorData.properties.title == "게시물 작성"){

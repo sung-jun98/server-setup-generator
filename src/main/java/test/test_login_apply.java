@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import server_setup_generator.dataHolder;
+import dbLogic.dataHolderDAO;
 
 
 //사용자에게 최종적으로 반환할 로그인 관련 서블릿. 
@@ -50,13 +51,14 @@ public class test_login_apply extends HttpServlet {
 		System.out.println("(test_login_apply) hidden input sessionID : " + request.getParameter("sessionID"));
 		
 		this.dataHolderPath = "dataHolder" + (String) request.getParameter("sessionID") + ".ser";
-		//.ser의 직렬화된 객체를 역직렬화.
-		try {
-			this.dh = deserializeDataHolder();
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		
+		//.ser의 직렬화된 객체를 역직렬화.(구버전)
+		/*
+		 * try { this.dh = deserializeDataHolder(); } catch (ClassNotFoundException e) {
+		 * e.printStackTrace(); }
+		 */
+		dataHolderDAO dhDAO = new dataHolderDAO();
+		this.dh = dhDAO.readDataHolderFromDatabase((String) request.getParameter("sessionID"));
 		
 		analyzeDataHolder(dh); //역직렬화된 dh의 맞춤형 변수 가져옴
 		
@@ -69,6 +71,7 @@ public class test_login_apply extends HttpServlet {
 		System.out.println(".ser로부터 받은 pw_error_check는 " + pw_error_check);
 		System.out.println(".ser로부터 받은 db_error_check는 " + db_error_check);
 		System.out.println("역직렬화한 loginStartPage : " + login_startPage);
+		System.out.println("역직렬화한 correct_path : " + correct_path);
 		System.out.println("역직렬화한 id_error_path : " + id_error_path);
 		System.out.println("역직렬화한 pw_error_path : " + pw_error_path);
 		System.out.println("역직렬화한 db_error_path : " + db_error_path);
@@ -83,7 +86,7 @@ public class test_login_apply extends HttpServlet {
 			//if(correct_check) {
 				//response.sendRedirect("/server_setup_generator/test/loginResult.jsp");//완료 경로 역시 사용자의 입력값에 따라 바꾸어 주어야 한다.
 			//}	
-				response.sendRedirect(login_startPage);
+				response.sendRedirect(correct_path);
 				System.out.println("로그인 성공");
 		} else if(result == 0 && pw_error_check) {//비밀번호 틀렸을 시
 			
@@ -99,6 +102,7 @@ public class test_login_apply extends HttpServlet {
 		}else if(result == -2 && db_error_check) {//DB오류
 			response.sendRedirect(db_error_path);
 			 System.out.println("DB오류 일어남\n");
+			 
 		}else {//어느 경우에도 해당 안될 경우. 즉 디폴트값 설정을 여기에 해주면 된다. 
 			response.sendRedirect(login_startPage);
 			System.out.println("그 어느 경우에도 해당 안됨");
@@ -135,6 +139,7 @@ public class test_login_apply extends HttpServlet {
 		this.password = dh.getPassword();
 		
 		this.correct_check = dh.isCorrect_check();
+		this.correct_path = dh.getCorrect_path();
 		
 		this.db_error_check = dh.isDb_error_check();
 		this.db_error_path = dh.getDb_error_path();

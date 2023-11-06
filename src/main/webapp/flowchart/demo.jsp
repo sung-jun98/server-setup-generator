@@ -36,6 +36,7 @@
 			background: white;
 			border: 1px solid #BBB;
 			margin-bottom: 10px;
+			
 		}
 	</style>
 </head>
@@ -110,7 +111,7 @@
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">아이디가 없을 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">비밀번호가 틀릴 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">DB오류가 발생했을 경우</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">리턴 페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">참값</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">입력값</div>
 		<form id=Building_DB_form>
@@ -144,7 +145,7 @@
 	<!--게시물 작성이라는 오퍼레이터가 캔버스 위에 올라가면 팝업될 화면 정의 -->
 	<div id="dialog_writeAction" title="게시물 업로드 관련 추가 오퍼레이터" style="display:none;">
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="1">웹페이지</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">리턴 페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="7">저장할 DB 정보</div>
 		 
 		<form id=Building_DB_form2>
@@ -180,7 +181,7 @@
 	<!--게시물 삭제라는 오퍼레이터가 캔버스 위에 올라가면 팝업될 화면 정의 -->
 	<div id="dialog_deleteAction" title="게시물 삭제 관련 추가 오퍼레이터" style="display:none;">
 			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">삭제 페이지</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">리턴 페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">삭제할 DB 정보</div>
 		 
 		<form id=Building_DB_form3>
@@ -237,7 +238,7 @@
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">아이디가 없을 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">비밀번호가 틀릴 경우</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">DB오류가 발생했을 경우</div>
-		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="1">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">리턴 페이지</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">참값</div>
 		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="3" data-nb-outputs="1">입력값</div>
 		    
@@ -621,7 +622,17 @@
 			
 			//보낼 데이터 객체 data{} 정의
 			var data = {};
-			data[id_for_key] = event.target.value;
+			
+			//'리턴페이지'의 URLAdress란에 데이터를 입력했을시에는, 보낼 키값을 URLAddress가 아니라, 오퍼레이터명으로 한다.
+			if (id_for_key === 'URLAdress'){ 
+				var inputElement = event.target;
+				var opTitle = $(inputElement).closest('.flowchart-operator').find('.flowchart-operator-title').text();
+				//var opTitle = $(this).parent().parent().parent().parent().siblings('.flowchart-operator-title').text();
+				data[opTitle] = event.target.value;
+			}
+			else{
+				data[id_for_key] = event.target.value;
+			}
 			console.log(data);//
 			
 			$.ajax({

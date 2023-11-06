@@ -171,8 +171,8 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setCorrect_path(String correct_path) {
-			//this.correct_path = correct_path;
-			this.correct_path = "/server_setup_generator/test/" + correct_path;
+			this.correct_path = correct_path;
+			//this.correct_path = "/server_setup_generator/test/" + correct_path;
 		}
 
 		public String getId_error_path() {
@@ -180,7 +180,8 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setId_error_path(String id_error_path) {
-			this.id_error_path = "/server_setup_generator/test/" + id_error_path;
+			//this.id_error_path = "/server_setup_generator/test/" + id_error_path;
+			this.id_error_path = id_error_path;
 			System.out.println("dataHoler에 set해진 Id_error_path는 " + this.id_error_path);//테스트
 		}
 
@@ -189,7 +190,8 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setPw_error_path(String pw_error_path) {
-			this.pw_error_path = "/server_setup_generator/test/" + pw_error_path;
+			//this.pw_error_path = "/server_setup_generator/test/" + pw_error_path;
+			this.pw_error_path = pw_error_path;
 			System.out.println("dataHoler에 set해진 pw_error_path는 " + this.pw_error_path);//테스트
 		}
 
@@ -198,7 +200,8 @@ public class dataHolder implements Serializable {
 		}
 
 		public void setDb_error_path(String db_error_path) {
-			this.db_error_path = "/server_setup_generator/test/" + db_error_path;
+			//this.db_error_path = "/server_setup_generator/test/" + db_error_path;
+			this.db_error_path = db_error_path;
 			System.out.println("dataHoler에 set해진 db_error_path는 " + this.db_error_path);//테스트
 		}
 		//==========여기서부터 BBS Write관련 setter/getter============

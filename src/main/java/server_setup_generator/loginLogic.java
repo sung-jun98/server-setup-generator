@@ -32,76 +32,119 @@ public class loginLogic {
 
 	//test_login_apply.java에서 사용할 데이터를 추출한다.
 	public void extract() {
-		//inputID, inputPW 추출
-		//디폴트값은 id/userPassword이다.
-		dh.setId((String)sc.getAttribute("inputID"));
-		dh.setPassword((String) sc.getAttribute("inputPW"));
-		
-		//output_0인 '일치'가 어딘가로 연결되어 있는지 체크
-		//나중에 여기가 어디로 연결되어 있는지도 분기문 더 추가해 볼 것
-		//만약 여기서 연결되어 있는 오퍼레이터가 리턴페이지가 아닐 경우에는 디폴트 경로도 추가해 줄것.
-		if(operatorInfo.get("로그인 기능").get("output_0") != null) {
-			dh.setCorrect_check(true);
-		}else {
-			dh.setCorrect_check(false);
-		}
-		
-		//아이디가 없을 경우
-		if(operatorInfo.get("로그인 기능").get("output_1") != null && 
-				operatorInfo.get("로그인 기능").get("output_1").contains("아이디가 없을 경우")) {
-			dh.setId_error_check(true);
+		if(operatorInfo.containsKey("로그인 기능")) {
+			 Map<String, ArrayList<String>> loginFunction = operatorInfo.get("로그인 기능");
+			//inputID, inputPW 추출
+			//디폴트값은 id/userPassword이다.
+			dh.setId((String)sc.getAttribute("inputID"));
+			dh.setPassword((String) sc.getAttribute("inputPW"));
 			
-			//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
-			if(operatorInfo.get("아이디가 없을 경우").get("output_0") != null) {
-				String outputOp_title_of_idError= operatorInfo.get("아이디가 없을 경우").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
-				
-				
-				outputOp_title_of_idError = checkRegex(outputOp_title_of_idError);
-				dh.setId_error_path((String) sc.getAttribute(outputOp_title_of_idError));
+			//output_0인 '일치'가 어딘가로 연결되어 있는지 체크
+			//나중에 여기가 어디로 연결되어 있는지도 분기문 더 추가해 볼 것
+			//만약 여기서 연결되어 있는 오퍼레이터가 리턴페이지가 아닐 경우에는 디폴트 경로도 추가해 줄것.
+			//if(operatorInfo.get("로그인 기능").get("output_0") != null) {
+			if(loginFunction.containsKey("output_0")) {
+				String loginSuccess_Op = operatorInfo.get("로그인 기능").get("output_0").get(0); //'로그인 기능' - '일치'와 연결되어있는 오퍼레이터명
+				dh.setCorrect_check(true);
+				Map<String, ArrayList<String>> loginSuccessOp= operatorInfo.get(loginSuccess_Op);
+				//'로그인 기능' - '일치' 오퍼레이터가 '리턴 페이지'오퍼레이터의 두번째 input과 연결되어 있을 경우에는 URL을 set, 그 이외의 경우에는 앞에 경로를 붙여서 set
+				 if (loginSuccessOp.containsKey("input_1") && loginSuccessOp.get("input_1").contains("로그인 기능")) {
+					 dh.setCorrect_path((String) sc.getAttribute(loginSuccess_Op));
+				 }else {
+					 //구버전(로컬서버에 파일형태로 저장)
+					 //dh.setCorrect_path("/server_setup_generator/test/" + (String) sc.getAttribute(loginSuccess_Op));
+					 //신버전(DB활용)
+					 dh.setCorrect_path("/deploy/" + (String) sc.getAttribute(loginSuccess_Op));
+				 }
+				//dh.setCorrect_path((String) sc.getAttribute(loginSuccess_Op));
+			}else {
+				dh.setCorrect_check(false);
 			}
-		}else {
-			dh.setId_error_check(false);
-		}
-		
-		//비밀번호가 일치하지 않을 경우
-		if(operatorInfo.get("로그인 기능").get("output_1") != null && 
-				operatorInfo.get("로그인 기능").get("output_1").contains("비밀번호가 틀릴 경우")) {
-			dh.setPw_error_check(true);
-			//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
-			if(operatorInfo.get("비밀번호가 틀릴 경우").get("output_0") != null) {
-				String outputOp_title_of_pwError= operatorInfo.get("비밀번호가 틀릴 경우").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
+			
+			//아이디가 없을 경우
+			if(operatorInfo.get("로그인 기능").get("output_1") != null && 
+					operatorInfo.get("로그인 기능").get("output_1").contains("아이디가 없을 경우")) {
+				dh.setId_error_check(true);
 				
-				
-				outputOp_title_of_pwError = checkRegex(outputOp_title_of_pwError);
-				dh.setPw_error_path((String) sc.getAttribute(outputOp_title_of_pwError));
+				//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
+				if(operatorInfo.get("아이디가 없을 경우").get("output_0") != null) {
+					String outputOp_title_of_idError= operatorInfo.get("아이디가 없을 경우").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
+					
+					
+					outputOp_title_of_idError = checkRegex(outputOp_title_of_idError);
+					Map<String, ArrayList<String>> returnOp= operatorInfo.get(outputOp_title_of_idError);
+					//'아이디가 없을 경우'오퍼레이터가 '리턴 페이지'오퍼레이터의 두번째 input과 연결되어 있을 경우에는 URL을 set, 그 이외의 경우에는 앞에 경로를 붙여서 set
+					 if (returnOp.containsKey("input_1") && returnOp.get("input_1").contains("아이디가 없을 경우")) {
+						 dh.setId_error_path((String) sc.getAttribute(outputOp_title_of_idError));
+					 }else {
+						 //구버전
+						 //dh.setId_error_path("/server_setup_generator/test/" + (String) sc.getAttribute(outputOp_title_of_idError));
+						 //신버전
+						 dh.setId_error_path("/deploy/" + (String) sc.getAttribute(outputOp_title_of_idError));
+					 }
+					
+					//dh.setId_error_path((String) sc.getAttribute(outputOp_title_of_idError));
+				}
+			}else {
+				dh.setId_error_check(false);
 			}
-		}else {
-			dh.setPw_error_check(false);
-		}
-		
-		//DB오류가 일어났을 경우
-		if(operatorInfo.get("로그인 기능").get("output_1") != null && 
-				operatorInfo.get("로그인 기능").get("output_1").contains("DB오류가 발생했을 경우")) {
-			dh.setDb_error_check(true);
-			//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
-			if(operatorInfo.get("DB오류가 발생했을 경우").get("output_0") != null) {
-				String outputOp_title_of_dbError= operatorInfo.get("DB오류가 발생했을 경우").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
-				
-				
-				outputOp_title_of_dbError = checkRegex(outputOp_title_of_dbError);
-				dh.setDb_error_path((String) sc.getAttribute(outputOp_title_of_dbError));
-				System.out.println("DB오류 관련 로직 실행중");
+			
+			//비밀번호가 일치하지 않을 경우
+			if(operatorInfo.get("로그인 기능").get("output_1") != null && 
+					operatorInfo.get("로그인 기능").get("output_1").contains("비밀번호가 틀릴 경우")) {
+				dh.setPw_error_check(true);
+				//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
+				//if(operatorInfo.get("비밀번호가 틀릴 경우").get("output_0") != null) {
+				if(operatorInfo.get("비밀번호가 틀릴 경우").containsKey("output_0")) {
+					String outputOp_title_of_pwError= operatorInfo.get("비밀번호가 틀릴 경우").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
+					
+					
+					outputOp_title_of_pwError = checkRegex(outputOp_title_of_pwError);
+					Map<String, ArrayList<String>> returnOp= operatorInfo.get(outputOp_title_of_pwError);
+					
+					//'비밀번호가 틀릴 경우'오퍼레이터가 '리턴 페이지'오퍼레이터의 두번째 input과 연결되어 있을 경우에는 URL을 set, 그 이외의 경우에는 앞에 경로를 붙여서 set
+					if (returnOp.containsKey("input_1") && returnOp.get("input_1").contains("비밀번호가 틀릴 경우")) {
+						 dh.setPw_error_path((String) sc.getAttribute(outputOp_title_of_pwError));
+					 }else {
+						 //구버전
+						 dh.setPw_error_path("/server_setup_generator/test/" + (String) sc.getAttribute(outputOp_title_of_pwError));
+						 //신버전
+						 dh.setPw_error_path("/deploy/" + (String) sc.getAttribute(outputOp_title_of_pwError));
+					 }
+					//dh.setPw_error_path((String) sc.getAttribute(outputOp_title_of_pwError));
+				}
+			}else {
+				dh.setPw_error_check(false);
 			}
-		}else {
-			dh.setDb_error_check(false);
-		}
+			
+			//DB오류가 일어났을 경우
+			if(operatorInfo.get("로그인 기능").containsKey("output_1") && 
+					operatorInfo.get("로그인 기능").get("output_1").contains("DB오류가 발생했을 경우")) {
+				
+				dh.setDb_error_check(true);
+				//'리턴 페이지n' 오퍼레이터와 연결되어 있을 경우 
+				if(operatorInfo.get("DB오류가 발생했을 경우").get("output_0") != null) {
+					String outputOp_title_of_dbError= operatorInfo.get("DB오류가 발생했을 경우").get("output_0").get(0);//리턴페이지 오퍼레이터의 title 출력됨
+					
+					
+					outputOp_title_of_dbError = checkRegex(outputOp_title_of_dbError);
+					//구버전
+					//dh.setDb_error_path((String) sc.getAttribute(outputOp_title_of_dbError));
+					//신버전
+					dh.setDb_error_path("/deploy/" +(String) sc.getAttribute(outputOp_title_of_dbError));
+					System.out.println("DB오류 관련 로직 실행중");
+				}
+			}else {
+				dh.setDb_error_check(false);
+			}
+			
+			//'입력값' 오퍼레이터의 파일 업로드란에 사용자가 파일을 업로드 했을 시
+			//다만, 상대경로는 빠져있다. setter에서 수정하든 여기서 수정하든 나중에 손봐야 한다.
+			if(sc.getAttribute("입력값") != null) {
+				dh.setLogin_startPage((String)sc.getAttribute("입력값"));
+			}
 		
-		//'입력값' 오퍼레이터의 파일 업로드란에 사용자가 파일을 업로드 했을 시
-		//다만, 상대경로는 빠져있다. setter에서 수정하든 여기서 수정하든 나중에 손봐야 한다.
-		if(sc.getAttribute("입력값") != null) {
-			dh.setLogin_startPage((String)sc.getAttribute("입력값"));
 		}
-		
 	}
 	
 	//연결되어 있는 오퍼레이터의 타이틀이 예상과 일치하는지 정규식을 통해 체크하고 리턴하는 메서드

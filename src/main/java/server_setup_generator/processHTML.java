@@ -29,6 +29,7 @@ import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.io.BufferedWriter;
 
+import dbLogic.documentDAO;
 //input 태그의 file 업로드를 했을 떄 연결될 서블릿. 그리고 이 서블릿의 파싱 결과는 ServletContext에 저장된다.
 @WebServlet("/processHTML")
 @MultipartConfig
@@ -49,7 +50,7 @@ public class processHTML extends HttpServlet {
 		// 파일업로드를 한 오퍼레이터의 title이 키가 되고, 업로드한 파일명이 value가 된 채로 ServletContext에 업로드
 		getServletContext().setAttribute(opTitle, filename);
 		request.getSession().setAttribute(opTitle, filename);//
-
+		
 		// 우선 오퍼레이터 '입력값'에서 파일을 업로드했을시
 		if (opTitle.equals("입력값")) {
 
@@ -106,7 +107,9 @@ public class processHTML extends HttpServlet {
 						System.out.println("(processHTML) hidden input의 sessionID : " + sessionInput.attr("value"));
 
 						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
-						saveAtServer(doc, filename);
+						//saveAtServer(doc, filename);
+						documentDAO docDAO = new documentDAO();
+						docDAO.saveDocument(doc, filename);
 					}
 
 				}
@@ -186,7 +189,11 @@ public class processHTML extends HttpServlet {
 						System.out.println("(processHTML) hidden input의 sessionID : " + sessionInput.attr("value"));
 
 						// 이 밑에 바꾼 속성을 바탕으로 새로 파일을 만들어 주는 코드를 만들어야 한다.
-						saveAtServer(doc, filename);
+						//saveAtServer(doc, filename);
+						
+						documentDAO docDAO = new documentDAO();
+						docDAO.saveDocument(doc, filename);
+						
 					}
 			}
 
