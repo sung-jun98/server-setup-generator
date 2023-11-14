@@ -276,6 +276,8 @@
 	    document.getElementById("mySidebar").style.display = "none";
 	    document.getElementById("openNav").style.display = "inline-block";
 	}
+	
+	var opTitleArray = []; // opTitle 값을 저장할 배열.  ->staticWebReturn과 processHTML에 보낼 AJAX메서드에서 쓴다
 	//==============================
 	//논모달 창 관련 jqeury 
 	/* $( function() {
@@ -298,7 +300,7 @@
 		    //===============panzoom/panout 테스트코드 끝===========
 		    //==================================================
 
-
+			
 			// Apply the plugin on a standard, empty div...
 			$flowchart.flowchart({
 				data: defaultFlowchartData,
@@ -500,16 +502,18 @@
 				    success: function(response) {
 				    	
 				    	// 파일 입력란을 선택
-				    	var fileInput = $('#loginStartPage')[0];
+				    	//var fileInput = $('#loginStartPage')[0];
 				    	// 선택한 파일의 이름을 가져옵니다.
-				    	var selectedFileName = fileInput.files[0].name; 
-				    	console.log('selectedFileName : ' + selectedFileName);
+				    	//var selectedFileName = fileInput.files[0].name; 
+				    	//console.log('selectedFileName : ' + selectedFileName);
+				    	 var opTitle = opTitleArray[0]; //업로드한 파일명중 하나
 				    	// 리다이렉트 URL 변수 완성
-				    	var redirectURL = '/server_setup_generator/test/' + selectedFileName;
+				    	var redirectURL = '/server_setup_generator/deploy/' + opTitle;
 				    	// 클라이언트 측에서 리다이렉트
-				    	window.location.href = redirectURL;
-				    	
-				      console.log('response : ' + response.result);
+				    	//window.location.href = redirectURL;
+				    	 // 새로운 탭에서 URL 열기
+				        window.open(redirectURL, '_blank');
+				      	console.log('response : ' + response.result);
 				      //console.log(JSON.stringify(data, null, 2));
 				    },
 				    error: function(jqXHR, textStatus, errorThrown) {
@@ -679,6 +683,18 @@
 			
 			console.log(opTitle);
 			formData.append("opTitle", opTitle); //테스트
+			
+			//업로드한 파일이름 추출하기
+			var fileInput = $(this).find('input[type="file"]')[0];
+			if (fileInput && fileInput.files.length > 0) {
+		        // 클라이언트가 업로드한 파일의 이름을 가져와서 formData에 추가
+		        var uploadedFileName = fileInput.files[0].name;
+
+		        // opTitleArray 배열에 파일 이름 추가
+		        opTitleArray.push(uploadedFileName);
+		        console.log(uploadedFileName);
+		    }
+			
 			
 			   $.ajax({
 				      url: '/server_setup_generator/processHTML',
