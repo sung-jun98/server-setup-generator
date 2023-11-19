@@ -43,7 +43,7 @@ public class documentDAO {
 	//===============================================
 	//============processHTML관련 메서드===============
 	
-	//클라이언트로부터 입력받은 document를 DB에 저장한다.
+	//클라이언트로부터 입력받은 document를 DB에 저장한다.(겹치는게 있다면 덮어씌운다)
 	public void saveDocument(Document doc, String filename) {
 	
         try {
@@ -67,6 +67,31 @@ public class documentDAO {
             closeResources(conn, pstmt, null);
         }
 	}
+	
+	//클라이언트로부터 입력받은 document를 DB에 저장한다. 
+	//단, 이미 해당 파일이 DB에 존재할 시에는 저장하지 않고 그냥 넘어간다.(덮어 씌우지 않는다.)
+		public void saveDocIfNotExist(Document doc, String filename) {
+		
+	        try {
+	            //conn = getConnection();
+	            String sql = "INSERT IGNORE INTO documents (fileName, content) VALUES (?, ?)";
+	            pstmt = conn.prepareStatement(sql);
+
+	            // Document 객체를 직렬화하고 바이트 배열로 변환
+	            byte[] serializedDoc = serializeDocument(doc);
+
+	            // PreparedStatement에 바이트 배열을 설정
+	            pstmt.setString(1, filename);
+	            pstmt.setBytes(2, serializedDoc);
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // 예외 처리
+	        } finally {
+	            // 연결 및 리소스 해제
+	            closeResources(conn, pstmt, null);
+	        }
+		}
 	
 	//클라이언트로부터 입력받은 파일을 DB에 넣기 전에 String형태로 바꾸고 다시 Byte형태로 이진화를 한다. 
 	private byte[] serializeDocument(Document doc) {

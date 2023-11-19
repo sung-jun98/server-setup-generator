@@ -17,7 +17,8 @@ public class redirctServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String pathInfo = request.getPathInfo(); // 클라이언트 요청 경로 추출
+		response.setContentType("text/html; charset=UTF-8"); 
+		String pathInfo = request.getPathInfo(); // 클라이언트 요청 경로 추출
 	        if (pathInfo != null) {
 	            String requestedPage = pathInfo.substring(1); // 맨 앞의 슬래시 제거
 	            // requestedPage를 이용하여 DB에서 해당 페이지의 내용을 가져오는 로직을 구현

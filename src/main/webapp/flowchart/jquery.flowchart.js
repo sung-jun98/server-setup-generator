@@ -690,6 +690,24 @@ jQuery(function ($) {
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'bbsTitle_delete').attr('placeholder', '제목 태그명').css("width", "100px").addClass('elasticValueLabel');
 			}
 			
+			//회원가입 기능
+			if(connectorInfos.label === "가입페이지input0"){
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
+				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
+			}
+			else if(connectorInfos.label === "가입페이지input1"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'signUpID').attr('placeholder', '아이디 태그명').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === "가입페이지input2"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'signUpPW').attr('placeholder', '비밀번호 태그명').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === "가입페이지input3"){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'signUpEmail').attr('placeholder', '이메일 태그명').css("width", "100px").addClass('elasticValueLabel');
+			}
+			else if(connectorInfos.label === '저장할DB정보_회원가입output0'){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'SignUpDbTableName').attr('placeholder', '저장할 Table명').css("width", "100px").addClass('elasticValueLabel');
+			}
+			
  /////////////////////
             
            
@@ -830,6 +848,39 @@ jQuery(function ($) {
 			}
 			//================게시물 삭제================
 			
+			//============회원가입==============
+			else if(operatorData.properties.title == "회원가입"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '가입 페이지';
+				
+				operatorData.properties.outputs.output_0.label = '연결 페이지';
+				operatorData.properties.outputs.output_1.label = '저장할 DB정보';
+			}
+			else if(operatorData.properties.title == "가입 페이지"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '가입페이지input0';
+				operatorData.properties.inputs.input_1.label = '가입페이지input1';
+				operatorData.properties.inputs.input_2.label = '가입페이지input2';
+				operatorData.properties.inputs.input_3.label = '가입페이지input3';
+				
+				operatorData.properties.outputs.output_0.label = '회원가입으로';
+				
+			}
+			else if(operatorData.properties.title == "저장할 DB 정보(회원가입)"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '저장할DB정보';
+				
+				operatorData.properties.outputs.output_0.label = '저장할DB정보_회원가입output0';
+				operatorData.properties.outputs.output_1.label = '회원ID';
+				operatorData.properties.outputs.output_2.label = '비밀번호';
+				operatorData.properties.outputs.output_3.label = '이메일';
+				
+				
+			}
+			//====================여기까지 회원가입 끝====================
         	//// 여기까지 테스트코드
 //=============================
             operatorData.internal = {};

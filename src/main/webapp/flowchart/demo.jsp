@@ -57,8 +57,9 @@
 		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="2" id="selectOption_login">로그인 기능</div>
 		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2" id="writeAction">게시물 작성</div>
 		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1" id="deleteAction">게시물 삭제</div>
+		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2" id="signUpAction">회원가입</div>
 		 
-		  <button class="get_data btn btn-outline-secondary" id="get_data" style="bottom:5px; position:absolute; left: 35%;">Get data</button>
+		  <button class="get_data btn btn-outline-secondary" id="get_data" style="bottom:5px; position:absolute; left: 35%;">작성 완료</button>
 		  
 	</div>
 	<div id="main">
@@ -210,6 +211,44 @@
 			
 		<hr>
 		</form>
+		</div>
+		
+		
+	<!-- 회원가입 이라는 오퍼레이터가 캔버스 위에 올라가면 팝업될 화면 정의 -->
+	<div id="dialog_signUp" title="회원가입 관련 추가 오퍼레이터" style="display:none;">
+			<div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="4" data-nb-outputs="1">가입 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1">리턴 페이지</div>
+		    <div class="draggable_operator btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="4">저장할 DB 정보(회원가입)</div>
+		 
+		<form id=Building_DB_form4>
+		<hr>
+			<h4>DB 관련 오퍼레이터 생성기</h4>
+			<table id="tableForDB4" class="table table-striped table-sm">
+		      <thead>
+		        <tr>
+		        	<th>Table Name</th>  
+		            <th>Column Name</th>
+		            <th>Data Type</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		        	<td rowspan="1" id="rowspan_Of_TableName4"><input type="text" id="tableName" name="tableName"  class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+		            <td><input type="text" id="columnName1" name="columnName1" class="form-control"  style="border:1px solid white; background-color:transparent;"></td>
+		            <td><input type="text" id="dataType1" name="dataType1" class="form-control"  style="border:1px solid white; background-color:transparent;"><br></td>
+		            <td><label> <input type="checkbox" id="primaryKey1" name="primaryKey1">PK</label></td>
+		            <td><label> <input type="checkbox" id="notNull1" name="notNull1">NN</label></td>
+		        </tr>
+		      </tbody>
+		      <input type="submit" value="DB 테이블 생성" class="btn btn-primary"><nbsp><nbsp>
+		      <input type="button" onClick="addRow4()" value="행 추가" class="btn btn-primary"></input>
+	    </table>
+			
+		<hr>
+		</form>
+		
+		
+	</div>
 <!-- .......................끝 -->
 	<!--  <button class="create_operator">Create operator</button>-->
 	

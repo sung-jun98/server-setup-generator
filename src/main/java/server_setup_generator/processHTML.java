@@ -53,7 +53,7 @@ public class processHTML extends HttpServlet {
 		
 		// 우선 오퍼레이터 '입력값'에서 파일을 업로드했을시
 		if (opTitle.equals("입력값")) {
-
+			
 			// 임시 저장할 파일 객체 만들기. 나중에 .jsp확장자 말고 .html일 경우도 정의해주기
 			File tempFile = File.createTempFile("loginTempFile", ".jsp");
 			// 클라이언트로부터 입력받은 파일을 tempFile에 복사한다.
@@ -198,6 +198,24 @@ public class processHTML extends HttpServlet {
 			}
 
 			tempFile.delete();
+		}else if(opTitle.equals("가입 페이지")) {
+			// 임시 저장할 파일 객체 만들기. 나중에 .jsp확장자 말고 .html일 경우도 정의해주기
+				File tempFile = File.createTempFile("signUpTempFile", ".jsp");
+				// 클라이언트로부터 입력받은 파일을 tempFile에 복사한다.
+				try (InputStream partInputStream = filePart.getInputStream()) {
+					Files.copy(partInputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					System.out.println(e);
+				}
+
+				// 임시 파일을 Jsoup으로 로드
+				Document doc = Jsoup.parse(tempFile, "UTF-8");
+				
+				//받은 파일을 DB에 업데이트한다.
+				documentDAO docDAO = new documentDAO();
+				//docDAO.saveDocIfNotExist(doc, filename);
+				docDAO.saveDocument(doc, filename);
+				
 		}
 
 	}

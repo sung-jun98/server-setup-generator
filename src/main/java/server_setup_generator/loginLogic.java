@@ -107,7 +107,7 @@ public class loginLogic {
 						 dh.setPw_error_path((String) sc.getAttribute(outputOp_title_of_pwError));
 					 }else {
 						 //구버전
-						 dh.setPw_error_path("/server_setup_generator/test/" + (String) sc.getAttribute(outputOp_title_of_pwError));
+						 //dh.setPw_error_path("/server_setup_generator/test/" + (String) sc.getAttribute(outputOp_title_of_pwError));
 						 //신버전
 						 dh.setPw_error_path("/deploy/" + (String) sc.getAttribute(outputOp_title_of_pwError));
 					 }

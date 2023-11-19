@@ -6,6 +6,7 @@ const canvas = document.getElementById("flowchartworkspace"); //캔버스
 const SelectOption_login = document.getElementById("selectOption_login"); //로그인 오퍼레이터 선택지 
 const const_for_writeOp = document.getElementById("writeAction"); //게시물 작성 오퍼레이션 선택지
 const const_for_deleteOp = document.getElementById("deleteAction"); //게시물 삭제 오퍼레이션 선택지
+const const_for_signUpOp = document.getElementById("signUpAction"); //회원가입 오퍼레이션 선택지
 
 //====================
 //======= 시작 ========새로운 요소가 캔버스에 추가될 때마다 실행될 콜백 함수 정의
@@ -39,6 +40,15 @@ const nonModal_load = function(mutationList){
 					//jquery에서 지원하는 모달 다이어그램 실행
 					$( function(){
 					    $("#dialog_deleteAction" ).dialog({
+					    	width : 600
+					    });
+					 });
+				}
+				else if(mutation.addedNodes[0] && mutation.addedNodes[0].classList.contains('flowchart-operator') && 
+				+ /^회원가입.*/.test(mutation.addedNodes[0].textContent)){
+					//jquery에서 지원하는 모달 다이어그램 실행
+					$( function(){
+					    $("#dialog_signUp" ).dialog({
 					    	width : 600
 					    });
 					 });
@@ -95,6 +105,15 @@ const_for_writeOp.addEventListener("dblclick", function(){
 const_for_deleteOp.addEventListener("dblclick", function(){
 	$( function(){
 		$( "#dialog_deleteAction" ).dialog({
+			width : 600
+		});
+	});
+})
+
+//'회원가입' 선택지를 클라이언트가 더블클릭 했을 때 관련 논모달 창 나옴.
+const_for_signUpOp.addEventListener("dblclick", function(){
+	$( function(){
+		$( "#dialog_signUp" ).dialog({
 			width : 600
 		});
 	});

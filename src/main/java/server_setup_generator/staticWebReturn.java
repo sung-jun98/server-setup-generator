@@ -25,6 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import bbs.writeActionLogic;
 import dbLogic.dataHolderDAO;
 
+import signUp.signUpLogic;
+
 @WebServlet(urlPatterns = "/staticWebReturn", loadOnStartup = 1) // 웰컴 페이지 설정
 public class staticWebReturn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -70,10 +72,14 @@ public class staticWebReturn extends HttpServlet {
 	     //=======게시물 업로드 관련======
 	     writeActionLogic writeActionLogic = new writeActionLogic(dh, session);
 	     writeActionLogic.extract();
-	     //dh = loginLogic.getDh();
 	     dh = writeActionLogic.getDh();
-	     //여러 단계들을 거치며 완성된 dh객체를 이진화하여 새로운 파일에 생성한다. 
 	     
+	     //=======회원가입 관련=========
+	     signUpLogic signUpLogic = new signUpLogic(dh, session);
+	     signUpLogic.extract();
+	     dh = signUpLogic.getDh();
+	     
+	     //========dataHolder 객체 DB에 저장=========
 	     //dataHolder_to_serial(dh, sessionID); //기존에 로컬 서버에 .ser형태로 저장하던 방식
 	     dataHolderDAO dhDAO = new dataHolderDAO();
 	     dhDAO.saveHolder(dh, sessionID);

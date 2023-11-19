@@ -28,7 +28,7 @@ public class redirectLogic {
 	}
 
 
-	//processHTML에서 저장받은 HTML파일 내부에 a태그를 설정해준다.
+	//processHTML에서 저장한 HTML파일을 DB에서 불러온다.그 다음 내부에 a태그를 설정해준다.
 	public void extract() {
 	
 	
