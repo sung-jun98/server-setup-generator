@@ -216,7 +216,25 @@ public class processHTML extends HttpServlet {
 				//docDAO.saveDocIfNotExist(doc, filename);
 				docDAO.saveDocument(doc, filename);
 				
-		}
+		}else if(startsWithReturnPage(opTitle)) {
+			// 임시 저장할 파일 객체 만들기. 나중에 .jsp확장자 말고 .html일 경우도 정의해주기
+			File tempFile = File.createTempFile("signUpTempFile", ".jsp");
+			// 클라이언트로부터 입력받은 파일을 tempFile에 복사한다.
+			try (InputStream partInputStream = filePart.getInputStream()) {
+				Files.copy(partInputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				System.out.println(e);
+			}
+
+			// 임시 파일을 Jsoup으로 로드
+			Document doc = Jsoup.parse(tempFile, "UTF-8");
+			
+			//받은 파일을 DB에 업데이트한다.
+			documentDAO docDAO = new documentDAO();
+			docDAO.saveDocIfNotExist(doc, filename);
+			//docDAO.saveDocument(doc, filename);
+			
+	}
 
 	}
 
@@ -235,6 +253,12 @@ public class processHTML extends HttpServlet {
 		}
 	}
 
+	//opTitle이 '리턴 페이지'로 시작하는지 확인한다.
+	//맞으면 true, 틀리면 false를 반환한다.
+	public boolean startsWithReturnPage(String input) {
+	    String prefix = "리턴 페이지";
+	    return input.startsWith(prefix);
+	}
 	// 아직 미완성
 	// 오퍼레이터 '리턴 페이지'에서 클라이언트가 파일 업로드를 했을 시
 	private void checkRegex(String opTitle, Part filePart) {
