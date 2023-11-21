@@ -84,6 +84,7 @@ public class documentDAO {
 	            pstmt.setString(1, filename);
 	            pstmt.setBytes(2, serializedDoc);
 	            pstmt.executeUpdate();
+	            System.out.println("(documentDAO/saveDocIfNotExist) DB에 저장 완료");
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	            // 예외 처리

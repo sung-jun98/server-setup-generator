@@ -708,6 +708,14 @@ jQuery(function ($) {
 				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'SignUpDbTableName').attr('placeholder', '저장할 Table명').css("width", "100px").addClass('elasticValueLabel');
 			}
 			
+			//리다이렉트 설정
+			if(connectorInfos.label === "리다이렉트input0"){
+				var $form = $('<form>').attr('action', '/server_setup_generator/processHTML').attr('method', 'post').attr('enctype', "multipart/form-data").addClass('fileForm');//
+				$operator_connector_label = $form.append($('<input>').attr('type', 'file').attr('id', 'loginStartPage').attr('name', 'loginStartPage').css("width", "90px"));
+			}
+			else if(connectorInfos.label === '리다이렉트input1'){
+				$operator_connector_label = $('<input>').attr('type', 'text').attr('id', 'redirectTagName').attr('placeholder', '연결할 요소명').css("width", "100px").addClass('elasticValueLabel');
+			}
  /////////////////////
             
            
@@ -881,6 +889,18 @@ jQuery(function ($) {
 				
 			}
 			//====================여기까지 회원가입 끝====================
+			
+			//====================리다이렉트 설정==================
+			else if(operatorData.properties.title == "리다이렉트 설정"){
+				//동일한 title명이 있다면 하나씩 정수를 올린다.	
+				operatorData.properties.title = this.checkOpTitle(operatorData.properties.title);
+				operatorData.properties.inputs.input_0.label = '리다이렉트input0';
+				operatorData.properties.inputs.input_1.label = '리다이렉트input1';
+				
+				operatorData.properties.outputs.output_0.label = '연결 페이지';
+				
+			}
+			//====================여기까지 리다이렉트 설정 끝==================
         	//// 여기까지 테스트코드
 //=============================
             operatorData.internal = {};

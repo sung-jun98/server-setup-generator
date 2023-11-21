@@ -58,6 +58,9 @@
 		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2" id="writeAction">게시물 작성</div>
 		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1" id="deleteAction">게시물 삭제</div>
 		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="1" data-nb-outputs="2" id="signUpAction">회원가입</div>
+		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1" id="redirectSet">리다이렉트 설정</div>
+		  <div class="draggable_operator w3-bar-item w3-button btn btn-outline-secondary" data-nb-inputs="2" data-nb-outputs="1" id="redirectSet">리턴 페이지</div>
+		  
 		 
 		  <button class="get_data btn btn-outline-secondary" id="get_data" style="bottom:5px; position:absolute; left: 35%;">작성 완료</button>
 		  

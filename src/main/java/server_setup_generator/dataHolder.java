@@ -58,7 +58,12 @@ public class dataHolder implements Serializable {
 	private String signUpID_db = "userID";
 	private String signUpPW_db = "userPW";
 	private String signUpEmail_db = "userEmail";
-	//--------------------------------------------------------
+	
+	//================리다이렉션 설정(redirect)에 관한 변수===================
+	private String redirect_Path = "flowchart/demo.jsp"; //결과가 성공적일시 연결될 페이지
+	
+	
+	//----------------------------------------------------------------
 	//OperatorInfo에 대한 getter
 	public Map<String, Map<String, ArrayList<String>>> getOperatorInfo() {
         return OperatorInfo;
@@ -366,6 +371,14 @@ public class dataHolder implements Serializable {
 
 		public void setSignUpEmail_db(String signUpEmail_db) {
 			this.signUpEmail_db = signUpEmail_db;
+		}
+//=====================Redirect 설정 관련 변수========================
+		public String getRedirect_Path() {
+			return redirect_Path;
+		}
+
+		public void setRedirect_Path(String redirect_Path) {
+			this.redirect_Path = redirect_Path;
 		}
 		
 		

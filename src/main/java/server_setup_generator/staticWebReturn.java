@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bbs.writeActionLogic;
 import dbLogic.dataHolderDAO;
-
+import redirect.redirectLogic;
 import signUp.signUpLogic;
 
 @WebServlet(urlPatterns = "/staticWebReturn", loadOnStartup = 1) // 웰컴 페이지 설정
@@ -79,9 +79,14 @@ public class staticWebReturn extends HttpServlet {
 	     signUpLogic.extract();
 	     dh = signUpLogic.getDh();
 	     
+	     //=======리다이렉트 설정 관련======
+	     redirectLogic redirectLogic = new redirectLogic(dh, session);
+	     redirectLogic.extract();
+	     dh = redirectLogic.getDh();
+	     
 	     //========dataHolder 객체 DB에 저장=========
 	     //dataHolder_to_serial(dh, sessionID); //기존에 로컬 서버에 .ser형태로 저장하던 방식
-	     dataHolderDAO dhDAO = new dataHolderDAO();
+	     dataHolderDAO dhDAO = new dataHolderDAO(); //DB에 저장하는 새로운 방식
 	     dhDAO.saveHolder(dh, sessionID);
 	     
 	     System.out.println("업데이트된 dh의 userID는 " + dh.getUserID());
